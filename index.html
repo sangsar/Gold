@@ -30,7 +30,6 @@
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            filter: grayscale(0);
         }
         body::after {
             content: "";
@@ -55,18 +54,11 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.7);
             transition: all 0.3s ease;
         }
-        .card:hover {
-            border-color: var(--bb-yellow);
-            box-shadow: 0 0 25px rgba(245,197,24,0.3);
-            transform: translateY(-5px);
-        }
-        /* لوگوها */
+        .card:hover { border-color: var(--bb-yellow); box-shadow: 0 0 25px rgba(245,197,24,0.3); transform: translateY(-5px); }
         .logo-links {
             display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;
         }
-        .logo-link {
-            text-decoration: none; transition: 0.3s; text-align: center;
-        }
+        .logo-link { text-decoration: none; transition: 0.3s; text-align: center; }
         .logo-link.bb .logo-main {
             font-family: 'Playfair Display', serif; font-style: italic; font-weight: 600;
             font-size: 2.8rem; color: var(--bb-green);
@@ -77,22 +69,18 @@
             font-size: 2rem; color: var(--bb-red);
             text-shadow: 0 0 15px rgba(229,9,20,0.5);
         }
-        /* تقویم مدرن و جمع‌وجور */
         .date-widget {
             background: linear-gradient(135deg, rgba(11,30,51,0.8) 0%, rgba(20,20,20,0.9) 100%);
             border-radius: 24px; padding: 25px; text-align: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
         .day-number {
-            font-size: 6rem; font-weight: 800; color: #fff;
-            text-shadow: 0 0 20px rgba(245,197,24,0.7);
-            line-height: 1;
+            font-size: 5rem; font-weight: 800; color: #fff;
+            text-shadow: 0 0 20px rgba(245,197,24,0.7); line-height: 1;
         }
         .day-detail {
-            font-size: 1.2rem; color: var(--bb-yellow); margin-top: 8px;
-            font-weight: 600;
+            font-size: 1.2rem; color: var(--bb-yellow); margin-top: 8px; font-weight: 600;
         }
-        /* جملات */
         .quote-card { border-right: 4px solid var(--bb-green); padding-right: 15px; }
         .quote-text {
             font-family: 'Special Elite', cursive;
@@ -109,7 +97,6 @@
             margin: 8px 0;
         }
         .quote-author { color: #aaa; font-size: 0.8rem; text-align: left; }
-        /* دکمه‌های شناور */
         .floating-btn {
             position: fixed; z-index: 999;
             width: 60px; height: 60px; border-radius: 50%;
@@ -118,7 +105,6 @@
             transition: 0.3s; display: flex; align-items: center; justify-content: center;
         }
         .floating-btn:hover { transform: scale(1.1); }
-        /* دکمه وینیل (گرامافون) */
         .player-float {
             bottom: 30px; right: 30px;
             background: radial-gradient(circle at 35% 35%, #1a1a1a, #0a0a0a);
@@ -141,9 +127,7 @@
             border-radius: 50%;
             box-shadow: 0 0 10px var(--bb-yellow);
         }
-        @keyframes spinVinyl {
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
         .player-float:hover { animation-play-state: paused; border-color: #fff; }
         .pomodorro-float {
             bottom: 30px; left: 30px;
@@ -151,7 +135,6 @@
             border: 2px solid #fff;
             font-size: 2rem;
         }
-        /* مدال‌ها */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
@@ -183,6 +166,11 @@
             transition: 0.2s;
         }
         .btn-circle:hover { background: linear-gradient(180deg, #e0e0e0 0%, #a0a0a0 50%, #707070 100%); }
+        #pomodorroModal .modal-content {
+            text-align: center; max-width: 100vw; max-height: 100vh;
+            border-radius: 0; width: 100%; height: 100%;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+        }
         .timer-ring {
             position: relative; width: 200px; height: 200px; margin: 20px auto;
         }
@@ -219,6 +207,12 @@
         }
         .btn-metal:hover { background: linear-gradient(180deg, #e0e0e0 0%, #a0a0a0 50%, #707070 100%); }
         .btn-close { background: var(--bb-red); color: #fff; margin-top: 15px; }
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .day-number { font-size: 4rem; }
+            .logo-link.bb .logo-main { font-size: 2rem; }
+            .logo-link.st .logo-main { font-size: 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -249,8 +243,8 @@
         </div>
     </div>
 
-    <button class="floating-btn player-float" id="playerFloatBtn"></button>
-    <button class="floating-btn pomodorro-float" id="pomodorroFloatBtn">🍅</button>
+    <button class="floating-btn player-float" id="playerFloatBtn" title="پخش موسیقی"></button>
+    <button class="floating-btn pomodorro-float" id="pomodorroFloatBtn" title="تایمر پومودورو">🍅</button>
 
     <div class="modal" id="playerModal">
         <div class="modal-content">
@@ -273,7 +267,7 @@
     </div>
 
     <div class="modal" id="pomodorroModal">
-        <div class="modal-content" style="text-align: center;">
+        <div class="modal-content">
             <h2>🍅 پومودورو</h2>
             <div class="timer-ring">
                 <svg width="200" height="200" viewBox="0 0 220 220">
@@ -318,11 +312,11 @@
             { en: "Get busy living or get busy dying.", fa: "یا مشغول زندگی کردن باش، یا مشغول مردن.", author: "Stephen King" },
             { en: "You miss 100% of the shots you don't take.", fa: "۱۰۰٪ شوت‌هایی که نمی‌زنی را از دست می‌دهی.", author: "Wayne Gretzky" },
             { en: "In the middle of difficulty lies opportunity.", fa: "در میان سختی‌ها فرصت نهفته است.", author: "Albert Einstein" },
-            { en: "The best time to plant a tree was 20 years ago. The second best time is now.", fa: "بهترین زمان برای کاشتن درخت ۲۰ سال پیش بود. دومین زمان، حالا است.", author: "Chinese Proverb" },
-            { en: "Do what you can, with what you have, where you are.", fa: "با آنچه داری، در همان جایی که هستی، هر کاری می‌توانی بکن.", author: "Theodore Roosevelt" },
+            { en: "The best time to plant a tree was 20 years ago. The second best time is now.", fa: "بهترین زمان کاشتن درخت ۲۰ سال پیش بود. دومین زمان اکنون است.", author: "Chinese Proverb" },
+            { en: "Do what you can, with what you have, where you are.", fa: "با آنچه داری، در جایی که هستی، هر کاری می‌توانی بکن.", author: "Theodore Roosevelt" },
             { en: "Believe you can and you're halfway there.", fa: "باور کن که می‌توانی، نصف راه را رفته‌ای.", author: "Theodore Roosevelt" },
             { en: "Act as if what you do makes a difference. It does.", fa: "طوری عمل کن که انگار کارت تفاوتی ایجاد می‌کند. همین‌طور است.", author: "William James" },
-            { en: "The only limit to our realization of tomorrow is our doubts of today.", fa: "تنها محدودیت برای تحقق فردا، تردیدهای امروز ماست.", author: "Franklin D. Roosevelt" },
+            { en: "The only limit to our realization of tomorrow is our doubts of today.", fa: "تنها محدودیت تحقق فردا، تردیدهای امروز ماست.", author: "Franklin D. Roosevelt" },
             { en: "Creativity is intelligence having fun.", fa: "خلاقیت، هوشی است که سرگرم می‌شود.", author: "Albert Einstein" },
             { en: "What we think, we become.", fa: "ما همان می‌شویم که فکر می‌کنیم.", author: "Buddha" },
             { en: "The only way to discover the limits of the possible is to go beyond them into the impossible.", fa: "تنها راه کشف محدودیت‌های ممکن، رفتن به فراسوی آن به ناممکن است.", author: "Arthur C. Clarke" },
@@ -366,12 +360,115 @@
             { en: "The weak can never forgive. Forgiveness is the attribute of the strong.", fa: "ضعیفان هرگز نمی‌توانند ببخشند. بخشش ویژگی قدرتمندان است.", author: "Mahatma Gandhi, All Men Are Brothers" },
             { en: "I have a dream that my four little children will one day live in a nation where they will not be judged by the color of their skin but by the content of their character.", fa: "من رویایی دارم که چهار فرزندم روزی در کشوری زندگی کنند که با رنگ پوستشان قضاوت نشوند، بلکه با محتوای شخصیتشان.", author: "Martin Luther King Jr., I Have a Dream" },
             { en: "Ask not what your country can do for you—ask what you can do for your country.", fa: "نپرس کشورت چه کاری می‌تواند برای تو بکند—بپرس تو چه کاری می‌توانی برای کشورت انجام دهی.", author: "John F. Kennedy, Inaugural Address" },
-            { en: "The only thing we have to fear is fear itself.", fa: "تنها چیزی که باید از آن بترسیم، خود ترس است.", author: "Franklin D. Roosevelt, First Inaugural Address" },
             { en: "Power tends to corrupt, and absolute power corrupts absolutely.", fa: "قدرت میل به فساد دارد و قدرت مطلق فساد مطلق می‌آورد.", author: "Lord Acton, Letter to Bishop Mandell Creighton" },
-            { en: "I disapprove of what you say, but I will defend to the death your right to say it.", fa: "من با آنچه می‌گویی مخالفم، اما تا پای جان از حق تو برای گفتنش دفاع می‌کنم.", author: "Voltaire, attributed" }
+            { en: "I disapprove of what you say, but I will defend to the death your right to say it.", fa: "من با آنچه می‌گویی مخالفم، اما تا پای جان از حق تو برای گفتنش دفاع می‌کنم.", author: "Voltaire, attributed" },
+            { en: "The secret of change is to focus all of your energy not on fighting the old, but on building the new.", fa: "راز تغییر آن است که تمام انرژی‌ات را نه صرف مبارزه با کهنه، که صرف ساختن نو کنی.", author: "Socrates" },
+            { en: "I am the master of my fate, I am the captain of my soul.", fa: "من سرور سرنوشتم، من ناخدای روح خود هستم.", author: "William Ernest Henley, Invictus" }
         ];
 
-        // ... (کدهای اجرایی مانند قبل)
+        // تقویم شمسی
+        function updateDate() {
+            const now = new Date();
+            try {
+                const pDay = now.toLocaleDateString('fa-IR', { day: 'numeric', calendar: 'persian' });
+                const pWeekday = now.toLocaleDateString('fa-IR', { weekday: 'long' });
+                const pMonth = now.toLocaleDateString('fa-IR', { month: 'long', calendar: 'persian' });
+                const pYear = now.toLocaleDateString('fa-IR', { year: 'numeric', calendar: 'persian' });
+                document.getElementById('todayDay').textContent = pDay;
+                document.getElementById('todayDetail').textContent = `${pWeekday}، ${pMonth} ${pYear}`;
+            } catch(e) {
+                document.getElementById('todayDay').textContent = now.getDate();
+                document.getElementById('todayDetail').textContent = now.toLocaleDateString('fa-IR');
+            }
+        }
+        updateDate(); setInterval(updateDate, 60000);
+
+        // ربات جملات
+        function updateQuotes() {
+            const m = motivQuotes[Math.floor(Math.random() * motivQuotes.length)];
+            document.getElementById('motivEn').textContent = `"${m.en}"`;
+            document.getElementById('motivFa').textContent = m.fa;
+            document.getElementById('motivAuthor').textContent = `— ${m.author}`;
+            const b = bookQuotes[Math.floor(Math.random() * bookQuotes.length)];
+            document.getElementById('bookEn').textContent = `"${b.en}"`;
+            document.getElementById('bookFa').textContent = b.fa;
+            document.getElementById('bookAuthor').textContent = `— ${b.author}`;
+        }
+        updateQuotes(); setInterval(updateQuotes, 7200000);
+
+        // پلیر
+        const audio = document.getElementById('audioPlayer');
+        let currentTrack = 0, isPlaying = false;
+        const playPauseBtn = document.getElementById('playPauseModal');
+        const progressFill = document.getElementById('progressFillModal');
+        const progressBar = document.getElementById('progressBarModal');
+        const currentTimeEl = document.getElementById('currentTimeModal');
+        const durationEl = document.getElementById('durationModal');
+        function loadTrack(idx) {
+            const s = songs[idx]; audio.src = s.url; audio.load();
+            playPauseBtn.textContent = '▶️'; isPlaying = false;
+            progressFill.style.width = '0%'; currentTimeEl.textContent = '0:00'; durationEl.textContent = '0:00';
+        }
+        function togglePlay() {
+            if (audio.paused) { audio.play(); playPauseBtn.textContent = '⏸️'; isPlaying = true; }
+            else { audio.pause(); playPauseBtn.textContent = '▶️'; isPlaying = false; }
+        }
+        function fmtTime(t) { if (isNaN(t)) return '0:00'; const m = Math.floor(t / 60); const s = Math.floor(t % 60); return `${m}:${String(s).padStart(2,'0')}`; }
+        audio.addEventListener('timeupdate', () => {
+            const pct = (audio.currentTime / audio.duration) * 100 || 0;
+            progressFill.style.width = pct + '%';
+            currentTimeEl.textContent = fmtTime(audio.currentTime);
+            if (audio.duration) durationEl.textContent = fmtTime(audio.duration);
+        });
+        audio.addEventListener('ended', () => { currentTrack = (currentTrack + 1) % songs.length; loadTrack(currentTrack); audio.play(); playPauseBtn.textContent = '⏸️'; isPlaying = true; });
+        progressBar.addEventListener('click', e => {
+            const rect = progressBar.getBoundingClientRect();
+            audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+        });
+        playPauseBtn.addEventListener('click', togglePlay);
+        document.getElementById('prevTrackModal').addEventListener('click', () => { currentTrack = (currentTrack - 1 + songs.length) % songs.length; loadTrack(currentTrack); audio.play(); playPauseBtn.textContent = '⏸️'; isPlaying = true; });
+        document.getElementById('nextTrackModal').addEventListener('click', () => { currentTrack = (currentTrack + 1) % songs.length; loadTrack(currentTrack); audio.play(); playPauseBtn.textContent = '⏸️'; isPlaying = true; });
+        const songListContainer = document.getElementById('songListContainer');
+        songs.forEach((s, idx) => {
+            const div = document.createElement('div'); div.className = 'song-item';
+            div.innerHTML = `<div><div class="song-title">${s.title}</div><div class="song-artist">${s.artist}</div></div><span style="color:var(--bb-yellow);">▶️</span>`;
+            div.addEventListener('click', () => { currentTrack = idx; loadTrack(idx); audio.play(); playPauseBtn.textContent = '⏸️'; isPlaying = true; });
+            songListContainer.appendChild(div);
+        });
+        const playerModal = document.getElementById('playerModal');
+        document.getElementById('playerFloatBtn').addEventListener('click', () => playerModal.classList.add('active'));
+        document.getElementById('closePlayerModal').addEventListener('click', () => playerModal.classList.remove('active'));
+
+        // پومودورو
+        const pomoModal = document.getElementById('pomodorroModal');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const ringFill = document.getElementById('ringFill');
+        const startPom = document.getElementById('startPom');
+        const resetPom = document.getElementById('resetPom');
+        const CIRC = 2 * Math.PI * 100;
+        ringFill.style.strokeDasharray = '6 10'; ringFill.style.strokeDashoffset = '0';
+        let pomoSec = 1500, pomoInterval = null, pomoRunning = false;
+        function updatePomUI() {
+            const m = Math.floor(pomoSec / 60), s = pomoSec % 60;
+            timerDisplay.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+            const offset = CIRC * (1 - pomoSec / 1500);
+            ringFill.style.strokeDashoffset = offset;
+        }
+        function startPomodorro() {
+            if (pomoRunning) return; pomoRunning = true; startPom.textContent = 'توقف';
+            pomoInterval = setInterval(() => {
+                if (pomoSec <= 0) { clearInterval(pomoInterval); pomoRunning = false; startPom.textContent = 'شروع'; alert('🍅 زمان استراحت!'); pomoSec = 1500; updatePomUI(); }
+                else { pomoSec--; updatePomUI(); }
+            }, 1000);
+        }
+        function resetPomodorro() { clearInterval(pomoInterval); pomoRunning = false; startPom.textContent = 'شروع'; pomoSec = 1500; updatePomUI(); }
+        startPom.addEventListener('click', () => { if (pomoRunning) resetPomodorro(); else startPomodorro(); });
+        resetPom.addEventListener('click', resetPomodorro);
+        document.getElementById('pomodorroFloatBtn').addEventListener('click', () => pomoModal.classList.add('active'));
+        document.getElementById('closePom').addEventListener('click', () => pomoModal.classList.remove('active'));
+        window.addEventListener('click', e => { if (e.target === playerModal) playerModal.classList.remove('active'); if (e.target === pomoModal) pomoModal.classList.remove('active'); });
+
+        loadTrack(0); updatePomUI();
     </script>
 </body>
 </html>
