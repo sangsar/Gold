@@ -61,42 +61,31 @@
             transform: translateY(-3px);
         }
 
-        /* ========== فقط بخش لوگوها تغییر کرده ========== */
+        /* لوگوها (تغییر یافته) */
         .logo-links {
-            display: flex; gap: 5px; align-items: center; justify-content: center; flex-wrap: wrap;
+            display: flex; gap: 0; align-items: stretch; justify-content: center;
         }
-        .logo-link { text-decoration: none; transition: 0.3s; }
-
-        /* لوگوی جدید دنیای سریال (مونوگرام DS) */
-        .logo-ds {
+        .logo-link {
+            flex: 1; text-decoration: none; max-width: 160px;
+        }
+        .logo-block {
             display: flex; align-items: center; justify-content: center;
-            background: linear-gradient(135deg, var(--purple), #c77dff);
-            border-radius: 20px 0 0 20px;
-            padding: 18px 25px;
-            box-shadow: 0 0 30px rgba(114,9,183,0.5);
+            padding: 10px 15px; text-align: center; height: 100%;
+            font-family: 'Playfair Display', serif; font-style: italic; font-weight: 400;
+            font-size: 1.3rem; color: #fff; line-height: 1.3;
+            box-shadow: 0 0 20px rgba(0,0,0,0.4);
+            transition: transform 0.2s;
         }
-        .logo-ds .ds-text {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem; font-weight: 700; font-style: italic;
-            color: #fff;
-            text-shadow: 0 0 15px rgba(255,255,255,0.6);
-            line-height: 1;
+        .logo-block:hover { transform: scale(1.03); }
+        .logo-block:first-child {
+            background: var(--purple);
+            border-radius: 15px 0 0 15px;
+            border-right: 1px solid rgba(255,255,255,0.3);
         }
-
-        /* لوگوی BIA 2 MOVE */
-        .logo-b2m {
-            display: flex; align-items: center; justify-content: center;
-            background: var(--card-bg);
-            border: 2px solid var(--pink);
-            border-radius: 0 20px 20px 0;
-            padding: 18px 25px;
-            box-shadow: 0 0 20px rgba(255,153,200,0.3);
-        }
-        .logo-b2m .b2m-text {
-            font-family: 'Nosifer', cursive;
-            font-size: 1.5rem; color: var(--pink);
-            text-shadow: 0 0 10px rgba(255,153,200,0.7);
-            line-height: 1.3;
+        .logo-block:last-child {
+            background: var(--pink);
+            color: #000;
+            border-radius: 0 15px 15px 0;
         }
 
         /* سایر استایل‌ها (بدون تغییر) */
@@ -195,27 +184,27 @@
         }
         .btn-metal:hover { background: linear-gradient(180deg, #fff 0%, #aaa 100%); }
         .btn-close { background: var(--purple); color: #fff; margin-top: 15px; }
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .logo-block { font-size: 1.1rem; padding: 8px 10px; }
+        }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- کارت لوگوها (فقط این بخش تغییر کرده) -->
+        <!-- کارت لوگوها (تغییر یافته) -->
         <div class="card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none;">
             <div class="logo-links">
                 <a href="https://serialblog1.top/" target="_blank" class="logo-link">
-                    <div class="logo-ds">
-                        <span class="ds-text">DONYAY<br>SERIAL</span>
-                    </div>
+                    <div class="logo-block">DONYAY<br>SERIAL</div>
                 </a>
                 <a href="https://www.nilfgaard.top/" target="_blank" class="logo-link">
-                    <div class="logo-b2m">
-                        <span class="b2m-text">BIA 2<br>MOVE</span>
-                    </div>
+                    <div class="logo-block">BIA 2<br>MOVE</div>
                 </a>
             </div>
         </div>
 
-        <!-- بقیهٔ بخش‌ها کاملاً بدون تغییر -->
+        <!-- بقیهٔ بخش‌ها بدون تغییر -->
         <div class="card date-widget">
             <div class="day-number" id="todayDay">۱۵</div>
             <div class="day-detail" id="todayDetail">چهارشنبه، اردیبهشت ۱۴۰۴</div>
