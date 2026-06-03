@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donyay Serial | داشبورد شخصی</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Orbitron:wght@500;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bb-green: #1c8139;
+            --bb-yellow: #f5c518;
+            --bb-black: #0a0a0a;
+            --bb-dark: #1a1a1a;
+            --bb-gray: #2d2d2d;
+            --glass: rgba(20, 20, 20, 0.85);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: var(--bb-black);
+            font-family: 'Vazirmatn', 'Special Elite', sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* پس‌زمینه با بافت شیمیایی */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(28,129,57,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 70%, rgba(245,197,24,0.1) 0%, transparent 50%);
+            z-index: 0; pointer-events: none;
+        }
+        .container {
+            position: relative; z-index: 1;
+            max-width: 1200px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+        /* کارت‌های شیشه‌ای */
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .card:hover {
+            border-color: var(--bb-yellow);
+            box-shadow: 0 0 25px rgba(245,197,24,0.3);
+            transform: translateY(-3px);
+        }
+        .card h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.4rem;
+            color: var(--bb-yellow);
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        /* لوگوهای لینک */
+        .logo-links {
+            display: flex; gap: 25px; align-items: center; flex-wrap: wrap;
+        }
+        .logo-btn {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--bb-dark); border: 2px solid var(--bb-green);
+            padding: 12px 22px; border-radius: 40px;
+            color: #fff; text-decoration: none; font-weight: bold;
+            font-size: 1.1rem; transition: 0.3s; position: relative; overflow: hidden;
+        }
+        .logo-btn.donyay {
+            border-color: var(--bb-yellow); color: var(--bb-yellow);
+        }
+        .logo-btn.nilfgaard {
+            border-color: #00bcd4; color: #00bcd4;
+        }
+        .logo-btn::before {
+            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: currentColor; opacity: 0.1; transition: opacity 0.3s;
+        }
+        .logo-btn:hover::before { opacity: 0.25; }
+        .logo-btn:hover { transform: scale(1.04); box-shadow: 0 0 25px currentColor; }
+        .logo-icon { font-size: 2rem; }
+        /* تایمر پومودورو (دکمه شناور) */
+        .pomodorro-float {
+            position: fixed; bottom: 30px; right: 30px; z-index: 999;
+            background: #c41e3a; border: none; color: #fff;
+            width: 70px; height: 70px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 2rem; box-shadow: 0 0 30px rgba(196,30,58,0.7);
+            transition: 0.3s; animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%,100% { box-shadow: 0 0 20px rgba(196,30,58,0.7); }
+            50% { box-shadow: 0 0 45px rgba(196,30,58,1); }
+        }
+        .pomodorro-float:hover {
+            transform: scale(1.1); background: #e63946;
+        }
+        /* مودال پومودورو */
+        .modal {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            z-index: 1000; display: none; justify-content: center; align-items: center;
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            background: var(--bb-dark); border: 2px solid var(--bb-green);
+            border-radius: 24px; padding: 35px; text-align: center;
+            max-width: 400px; width: 90%; color: #fff;
+        }
+        .timer-circle {
+            width: 180px; height: 180px; margin: 20px auto;
+            border-radius: 50%; border: 6px solid var(--bb-green);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 3rem; font-family: 'Orbitron', sans-serif;
+            box-shadow: 0 0 35px rgba(28,129,57,0.4);
+        }
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
+        .btn { padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .btn-start { background: var(--bb-green); color: #fff; }
+        .btn-reset { background: #444; color: #fff; }
+        /* نقل‌قول */
+        .quote-text {
+            font-family: 'Special Elite', cursive;
+            font-size: 1.2rem; line-height: 2; color: var(--bb-yellow);
+            margin: 15px 0; border-right: 3px solid var(--bb-green); padding-right: 15px;
+        }
+        .quote-author { color: #aaa; font-size: 0.9rem; }
+        /* تقویم */
+        .date-widget {
+            display: flex; align-items: center; justify-content: center; gap: 15px;
+            font-family: 'Orbitron', sans-serif;
+        }
+        .date-day { font-size: 3.5rem; color: var(--bb-yellow); }
+        .date-month { font-size: 1.2rem; color: #aaa; }
+        .date-year { font-size: 1.2rem; color: var(--bb-green); }
+        /* گالری تصاویر */
+        .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
+        .img-card img {
+            width: 100%; height: 120px; object-fit: cover; border-radius: 12px;
+            filter: grayscale(20%); transition: 0.3s;
+        }
+        .img-card img:hover { filter: grayscale(0); transform: scale(1.05); }
+        /* Responsive */
+        @media (max-width: 600px) {
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- کارت لوگوها و لینک‌ها -->
+    <div class="card">
+        <h2>🔗 لینک‌های سریع</h2>
+        <div class="logo-links">
+            <a href="https://serialblog1.top/" target="_blank" class="logo-btn donyay">
+                <span class="logo-icon">🎬</span> DONYAY SERIAL
+            </a>
+            <a href="https://www.nilfgaard.top/" target="_blank" class="logo-btn nilfgaard">
+                <span class="logo-icon">⚡</span> BIA 2 MOVE
+            </a>
+        </div>
+    </div>
+
+    <!-- کارت تقویم -->
+    <div class="card">
+        <h2>📅 تاریخ امروز</h2>
+        <div class="date-widget" id="dateWidget"></div>
+    </div>
+
+    <!-- کارت جمله انگیزشی -->
+    <div class="card">
+        <h2>💬 جمله انگیزشی</h2>
+        <div class="quote-text" id="motivQuote">"The only way to do great work is to love what you do."</div>
+        <div class="quote-author" id="motivAuthor">— Steve Jobs</div>
+    </div>
+
+    <!-- کارت تیکه کتاب -->
+    <div class="card">
+        <h2>📖 تکه‌ای از کتاب‌ها</h2>
+        <div class="quote-text" id="bookQuote">"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife."</div>
+        <div class="quote-author" id="bookAuthor">— Jane Austen, Pride and Prejudice</div>
+    </div>
+
+    <!-- کارت گالری تصاویر -->
+    <div class="card">
+        <h2>🖼️ گالری 4K</h2>
+        <div class="image-grid">
+            <div class="img-card"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" alt="art"></div>
+            <div class="img-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" alt="abstract"></div>
+            <div class="img-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" alt="chemical"></div>
+        </div>
+    </div>
+</div>
+
+<!-- دکمه شناور پومودورو -->
+<button class="pomodorro-float" id="pomodorroBtn" title="تایمر پومودورو">🍅</button>
+
+<!-- مودال پومودورو -->
+<div class="modal" id="pomodorroModal">
+    <div class="modal-content">
+        <h2>🍅 تایمر پومودورو</h2>
+        <div class="timer-circle" id="timerDisplay">25:00</div>
+        <div class="modal-buttons">
+            <button class="btn btn-start" id="startPom">شروع</button>
+            <button class="btn btn-reset" id="resetPom">تنظیم مجدد</button>
+        </div>
+        <button class="btn btn-reset" style="margin-top:15px;" id="closePom">بستن</button>
+    </div>
+</div>
+
+<script>
+    // ==================== تقویم شمسی ساده ====================
+    function getPersianDate() {
+        const now = new Date();
+        const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'persian' };
+        try {
+            return now.toLocaleDateString('fa-IR', options);
+        } catch(e) {
+            // Fallback
+            return now.toLocaleDateString('fa-IR');
+        }
+    }
+    const dateStr = getPersianDate().split(' ');
+    document.getElementById('dateWidget').innerHTML = `
+        <div class="date-day">${dateStr[2] || ''}</div>
+        <div><div class="date-month">${dateStr[1] || ''}</div><div class="date-year">${dateStr[0] || ''}</div></div>
+    `;
+
+    // ==================== جملات انگیزشی ====================
+    const motivations = [
+        { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
+        { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison" },
+        { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
+        { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
+        { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" }
+    ];
+    const randMotiv = motivations[Math.floor(Math.random() * motivations.length)];
+    document.getElementById('motivQuote').textContent = `"${randMotiv.text}"`;
+    document.getElementById('motivAuthor').textContent = `— ${randMotiv.author}`;
+
+    // ==================== نقل‌قول کتاب‌ها ====================
+    const bookQuotes = [
+        { text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", author: "Jane Austen, Pride and Prejudice" },
+        { text: "All happy families are alike; each unhappy family is unhappy in its own way.", author: "Leo Tolstoy, Anna Karenina" },
+        { text: "It was the best of times, it was the worst of times.", author: "Charles Dickens, A Tale of Two Cities" },
+        { text: "Whatever our souls are made of, his and mine are the same.", author: "Emily Brontë, Wuthering Heights" },
+        { text: "So we beat on, boats against the current, borne back ceaselessly into the past.", author: "F. Scott Fitzgerald, The Great Gatsby" }
+    ];
+    const randBook = bookQuotes[Math.floor(Math.random() * bookQuotes.length)];
+    document.getElementById('bookQuote').textContent = `"${randBook.text}"`;
+    document.getElementById('bookAuthor').textContent = `— ${randBook.author}`;
+
+    // ==================== پومودورو ====================
+    const pomoModal = document.getElementById('pomodorroModal');
+    const pomoBtn = document.getElementById('pomodorroBtn');
+    const timerDisplay = document.getElementById('timerDisplay');
+    const startBtn = document.getElementById('startPom');
+    const resetBtn = document.getElementById('resetPom');
+    const closeBtn = document.getElementById('closePom');
+
+    let pomoInterval = null;
+    let pomoSeconds = 1500; // 25 دقیقه
+    let isRunning = false;
+
+    function updateTimerDisplay() {
+        const mins = Math.floor(pomoSeconds / 60);
+        const secs = pomoSeconds % 60;
+        timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    function startPomodorro() {
+        if (isRunning) return;
+        isRunning = true;
+        startBtn.textContent = 'توقف';
+        pomoInterval = setInterval(() => {
+            if (pomoSeconds <= 0) {
+                clearInterval(pomoInterval);
+                isRunning = false;
+                startBtn.textContent = 'شروع';
+                alert('🍅 پومودورو تموم شد! استراحت کن.');
+                pomoSeconds = 1500;
+                updateTimerDisplay();
+            } else {
+                pomoSeconds--;
+                updateTimerDisplay();
+            }
+        }, 1000);
+    }
+
+    function resetPomodorro() {
+        clearInterval(pomoInterval);
+        isRunning = false;
+        startBtn.textContent = 'شروع';
+        pomoSeconds = 1500;
+        updateTimerDisplay();
+    }
+
+    startBtn.addEventListener('click', () => {
+        if (isRunning) {
+            resetPomodorro();
+        } else {
+            startPomodorro();
+        }
+    });
+    resetBtn.addEventListener('click', resetPomodorro);
+    pomoBtn.addEventListener('click', () => pomoModal.classList.add('active'));
+    closeBtn.addEventListener('click', () => pomoModal.classList.remove('active'));
+    pomoModal.addEventListener('click', (e) => {
+        if (e.target === pomoModal) pomoModal.classList.remove('active');
+    });
+
+    updateTimerDisplay();
+</script>
+</body>
+</html>
