@@ -3,59 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Donyay Serial | داشبورد شخصی</title>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Orbitron:wght@500;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Donyay Serial | دنیای سریال</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Orbitron:wght@500;700;900&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
+            --neon-red: #e50914;
             --bb-green: #1c8139;
             --bb-yellow: #f5c518;
-            --bb-black: #0a0a0a;
-            --bb-dark: #1a1a1a;
-            --bb-gray: #2d2d2d;
-            --glass: rgba(20, 20, 20, 0.85);
+            --bb-dark: #0a0a0a;
+            --card-bg: rgba(18, 18, 18, 0.9);
+            --glass: rgba(25, 25, 25, 0.8);
+            --text: #e0e0e0;
+            --stranger-blue: #00a8e8;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: var(--bb-black);
-            font-family: 'Vazirmatn', 'Special Elite', sans-serif;
-            color: #e0e0e0;
+            background: var(--bb-dark);
+            font-family: 'Vazirmatn', sans-serif;
+            color: var(--text);
             min-height: 100vh;
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        /* پس‌زمینه با بافت شیمیایی */
+        /* پس‌زمینه با ذرات شیمیایی */
         body::before {
             content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 20% 30%, rgba(28,129,57,0.15) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 70%, rgba(245,197,24,0.1) 0%, transparent 50%);
+            background:
+                radial-gradient(circle at 20% 30%, rgba(28,129,57,0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(229,9,20,0.12) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(245,197,24,0.08) 0%, transparent 70%);
             z-index: 0; pointer-events: none;
         }
-        .container {
+        .main-container {
             position: relative; z-index: 1;
-            max-width: 1200px; margin: 0 auto;
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            max-width: 1100px; width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 25px;
+            margin-bottom: 120px; /* جا برای پلیر */
         }
-        /* کارت‌های شیشه‌ای */
         .card {
-            background: var(--glass);
-            backdrop-filter: blur(12px);
+            background: var(--card-bg);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 18px;
+            border-radius: 20px;
             padding: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.6);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
         }
         .card:hover {
             border-color: var(--bb-yellow);
-            box-shadow: 0 0 25px rgba(245,197,24,0.3);
-            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(245,197,24,0.3);
+            transform: translateY(-4px);
         }
-        .card h2 {
+        h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 1.4rem;
             color: var(--bb-yellow);
@@ -64,262 +72,514 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 10px;
         }
-        /* لوگوهای لینک */
-        .logo-links {
-            display: flex; gap: 25px; align-items: center; flex-wrap: wrap;
+        /* لینک‌های سریع */
+        .quick-links {
+            display: flex; gap: 20px; align-items: center; flex-wrap: wrap;
         }
-        .logo-btn {
+        .link-btn {
             display: flex; align-items: center; gap: 12px;
-            background: var(--bb-dark); border: 2px solid var(--bb-green);
-            padding: 12px 22px; border-radius: 40px;
-            color: #fff; text-decoration: none; font-weight: bold;
-            font-size: 1.1rem; transition: 0.3s; position: relative; overflow: hidden;
+            padding: 15px 25px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 1.2rem;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid;
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
         }
-        .logo-btn.donyay {
-            border-color: var(--bb-yellow); color: var(--bb-yellow);
+        .link-btn::before {
+            content: "";
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: currentColor; opacity: 0.1;
+            transition: opacity 0.3s;
         }
-        .logo-btn.nilfgaard {
-            border-color: #00bcd4; color: #00bcd4;
+        .link-btn:hover::before { opacity: 0.25; }
+        .link-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px currentColor;
         }
-        .logo-btn::before {
-            content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: currentColor; opacity: 0.1; transition: opacity 0.3s;
+        .donyay-btn {
+            color: var(--bb-yellow); border-color: var(--bb-yellow);
+            font-family: 'Orbitron', sans-serif;
         }
-        .logo-btn:hover::before { opacity: 0.25; }
-        .logo-btn:hover { transform: scale(1.04); box-shadow: 0 0 25px currentColor; }
-        .logo-icon { font-size: 2rem; }
-        /* تایمر پومودورو (دکمه شناور) */
+        .nilfgaard-btn {
+            color: var(--neon-red); border-color: var(--neon-red);
+            font-family: 'Special Elite', cursive;
+            text-transform: uppercase;
+        }
+        .link-icon { font-size: 2rem; }
+        /* تقویم */
+        .calendar-widget {
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(0,0,0,0.3); border-radius: 16px; padding: 20px;
+        }
+        .date-section {
+            display: flex; align-items: baseline; gap: 10px;
+        }
+        .day-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem; color: var(--bb-yellow); line-height: 1;
+        }
+        .month-year {
+            display: flex; flex-direction: column;
+        }
+        .month {
+            font-family: 'Vazirmatn', sans-serif;
+            font-size: 1.4rem; font-weight: 600; color: #fff;
+        }
+        .year {
+            font-size: 1rem; color: var(--stranger-blue);
+        }
+        .time-section {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem; color: var(--neon-red);
+            text-shadow: 0 0 15px var(--neon-red);
+        }
+        /* نقل‌قول‌ها */
+        .quote-card {
+            font-family: 'Special Elite', cursive;
+        }
+        .quote-text {
+            font-size: 1.1rem; line-height: 2; color: #fff;
+            border-right: 4px solid var(--bb-green); padding-right: 15px;
+            margin-bottom: 10px;
+            font-style: italic;
+        }
+        .quote-author {
+            color: #aaa; font-size: 0.9rem; text-align: left;
+        }
+        /* پلیر */
+        .music-player {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: rgba(10,10,10,0.95);
+            border-top: 2px solid var(--bb-yellow);
+            backdrop-filter: blur(20px);
+            padding: 12px 20px;
+            display: flex; align-items: center; gap: 15px;
+            z-index: 999;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .player-controls {
+            display: flex; align-items: center; gap: 10px;
+        }
+        .player-btn {
+            background: none; border: 2px solid var(--bb-yellow);
+            color: var(--bb-yellow); width: 36px; height: 36px;
+            border-radius: 50%; display: flex; align-items: center;
+            justify-content: center; cursor: pointer; font-size: 1.1rem;
+            transition: 0.2s;
+        }
+        .player-btn:hover { background: var(--bb-yellow); color: #000; }
+        .track-info {
+            display: flex; flex-direction: column; margin: 0 10px;
+        }
+        .track-title { font-weight: bold; color: #fff; }
+        .track-artist { font-size: 0.8rem; color: #aaa; }
+        .progress-area {
+            display: flex; align-items: center; gap: 8px; flex: 1;
+        }
+        .progress-bar {
+            height: 4px; background: #444; border-radius: 2px;
+            flex: 1; cursor: pointer; position: relative;
+        }
+        .progress-fill {
+            height: 100%; background: var(--bb-yellow);
+            border-radius: 2px; width: 0%;
+            box-shadow: 0 0 8px var(--bb-yellow);
+            transition: width 0.1s linear;
+        }
+        .vinyl-icon {
+            width: 36px; height: 36px; border-radius: 50%;
+            border: 3px solid var(--bb-yellow);
+            background: radial-gradient(circle at 50% 50%, #000 10%, #222 50%, #000 100%);
+            animation: spin 2s linear infinite paused;
+            box-shadow: 0 0 10px var(--bb-yellow);
+        }
+        .vinyl-icon.playing { animation-play-state: running; }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        /* پومودورو */
         .pomodorro-float {
-            position: fixed; bottom: 30px; right: 30px; z-index: 999;
-            background: #c41e3a; border: none; color: #fff;
-            width: 70px; height: 70px; border-radius: 50%;
+            position: fixed; bottom: 100px; right: 30px; z-index: 1000;
+            width: 65px; height: 65px; border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, #ff6347, #b22222);
+            border: 2px solid #fff; color: #fff;
             display: flex; align-items: center; justify-content: center;
-            cursor: pointer; font-size: 2rem; box-shadow: 0 0 30px rgba(196,30,58,0.7);
+            cursor: pointer; font-size: 2.2rem;
+            box-shadow: 0 0 25px rgba(255,99,71,0.7);
             transition: 0.3s; animation: pulse 2s infinite;
         }
         @keyframes pulse {
-            0%,100% { box-shadow: 0 0 20px rgba(196,30,58,0.7); }
-            50% { box-shadow: 0 0 45px rgba(196,30,58,1); }
+            0%,100% { box-shadow: 0 0 20px rgba(255,99,71,0.8); }
+            50% { box-shadow: 0 0 45px rgba(255,99,71,1); }
         }
-        .pomodorro-float:hover {
-            transform: scale(1.1); background: #e63946;
-        }
-        /* مودال پومودورو */
+        .pomodorro-float:hover { transform: scale(1.1); }
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            z-index: 1000; display: none; justify-content: center; align-items: center;
+            z-index: 2000; display: none; justify-content: center; align-items: center;
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: var(--bb-dark); border: 2px solid var(--bb-green);
-            border-radius: 24px; padding: 35px; text-align: center;
-            max-width: 400px; width: 90%; color: #fff;
+            background: var(--card-bg); border: 2px solid var(--bb-green);
+            border-radius: 30px; padding: 30px; text-align: center;
+            max-width: 360px; width: 90%; color: #fff;
+            position: relative;
         }
-        .timer-circle {
-            width: 180px; height: 180px; margin: 20px auto;
-            border-radius: 50%; border: 6px solid var(--bb-green);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 3rem; font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 0 35px rgba(28,129,57,0.4);
+        .timer-container {
+            position: relative; width: 180px; height: 180px; margin: 20px auto;
         }
-        .modal-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; }
-        .btn { padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        .tomato-emoji {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%); font-size: 4.5rem;
+            z-index: 2;
+        }
+        .progress-ring {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            transform: rotate(-90deg);
+        }
+        .progress-ring circle {
+            fill: none; stroke-width: 8;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 0.35s;
+            transform-origin: center;
+        }
+        .ring-bg {
+            stroke: rgba(255,255,255,0.1);
+        }
+        .ring-fill {
+            stroke: var(--bb-green);
+            stroke-dasharray: 502.65; /* 2 * PI * 80 */
+            stroke-dashoffset: 0;
+            filter: drop-shadow(0 0 6px var(--bb-green));
+        }
+        .timer-display {
+            position: absolute; bottom: -30px; left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem; color: var(--bb-yellow);
+        }
+        .modal-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 40px; }
+        .btn { padding: 10px 25px; border-radius: 30px; font-weight: bold; cursor: pointer; transition: 0.3s; border: none; }
         .btn-start { background: var(--bb-green); color: #fff; }
         .btn-reset { background: #444; color: #fff; }
-        /* نقل‌قول */
-        .quote-text {
-            font-family: 'Special Elite', cursive;
-            font-size: 1.2rem; line-height: 2; color: var(--bb-yellow);
-            margin: 15px 0; border-right: 3px solid var(--bb-green); padding-right: 15px;
-        }
-        .quote-author { color: #aaa; font-size: 0.9rem; }
-        /* تقویم */
-        .date-widget {
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            font-family: 'Orbitron', sans-serif;
-        }
-        .date-day { font-size: 3.5rem; color: var(--bb-yellow); }
-        .date-month { font-size: 1.2rem; color: #aaa; }
-        .date-year { font-size: 1.2rem; color: var(--bb-green); }
-        /* گالری تصاویر */
-        .image-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; }
-        .img-card img {
-            width: 100%; height: 120px; object-fit: cover; border-radius: 12px;
-            filter: grayscale(20%); transition: 0.3s;
-        }
-        .img-card img:hover { filter: grayscale(0); transform: scale(1.05); }
-        /* Responsive */
-        @media (max-width: 600px) {
-            .container { grid-template-columns: 1fr; }
+        .btn-close { background: var(--neon-red); color: #fff; margin-top: 15px; }
+        @media (max-width: 768px) {
+            .main-container { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <!-- کارت لوگوها و لینک‌ها -->
-    <div class="card">
-        <h2>🔗 لینک‌های سریع</h2>
-        <div class="logo-links">
-            <a href="https://serialblog1.top/" target="_blank" class="logo-btn donyay">
-                <span class="logo-icon">🎬</span> DONYAY SERIAL
-            </a>
-            <a href="https://www.nilfgaard.top/" target="_blank" class="logo-btn nilfgaard">
-                <span class="logo-icon">⚡</span> BIA 2 MOVE
-            </a>
+    <div class="main-container">
+        <!-- کارت لینک‌های سریع -->
+        <div class="card">
+            <h2>⚡ دسترسی سریع</h2>
+            <div class="quick-links">
+                <a href="https://serialblog1.top/" target="_blank" class="link-btn donyay-btn">
+                    <span class="link-icon">🎬</span> DONYAY SERIAL
+                </a>
+                <a href="https://www.nilfgaard.top/" target="_blank" class="link-btn nilfgaard-btn">
+                    <span class="link-icon">⚡</span> BIA 2 MOVE
+                </a>
+            </div>
+        </div>
+
+        <!-- کارت تقویم حرفه‌ای -->
+        <div class="card">
+            <h2>📅 تاریخ و ساعت</h2>
+            <div class="calendar-widget">
+                <div class="date-section">
+                    <div class="day-number" id="persianDay">۱۵</div>
+                    <div class="month-year">
+                        <div class="month" id="persianMonth">اردیبهشت</div>
+                        <div class="year" id="persianYear">۱۴۰۴</div>
+                    </div>
+                </div>
+                <div class="time-section" id="liveTime">۲۳:۴۵:۱۲</div>
+            </div>
+        </div>
+
+        <!-- جمله انگیزشی -->
+        <div class="card quote-card">
+            <h2>💬 جمله انگیزشی</h2>
+            <div class="quote-text" id="motivQuote">"تنها راه انجام کار بزرگ، عشق ورزیدن به کاری است که انجام می‌دهی."</div>
+            <div class="quote-author" id="motivAuthor">— استیو جابز</div>
+        </div>
+
+        <!-- تکه کتاب -->
+        <div class="card quote-card">
+            <h2>📖 تکه‌ای از کتاب‌ها</h2>
+            <div class="quote-text" id="bookQuote">"حقیقتاً مسلم است که یک مرد مجرد با ثروتی خوب، نیازمند یک همسر است."</div>
+            <div class="quote-author" id="bookAuthor">— جین آستن، غرور و تعصب</div>
         </div>
     </div>
 
-    <!-- کارت تقویم -->
-    <div class="card">
-        <h2>📅 تاریخ امروز</h2>
-        <div class="date-widget" id="dateWidget"></div>
+    <!-- پلیر موسیقی -->
+    <div class="music-player" id="musicPlayer">
+        <div class="player-controls">
+            <button class="player-btn" id="prevTrack">⏮</button>
+            <button class="player-btn" id="playPauseBtn">▶️</button>
+            <button class="player-btn" id="nextTrack">⏭</button>
+        </div>
+        <div class="track-info">
+            <div class="track-title" id="trackTitle">آهنگ انتخاب نشده</div>
+            <div class="track-artist" id="trackArtist"></div>
+        </div>
+        <div class="progress-area">
+            <span id="currentTime">0:00</span>
+            <div class="progress-bar" id="progressBar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <span id="durationTime">0:00</span>
+        </div>
+        <div class="vinyl-icon" id="vinylIcon"></div>
     </div>
 
-    <!-- کارت جمله انگیزشی -->
-    <div class="card">
-        <h2>💬 جمله انگیزشی</h2>
-        <div class="quote-text" id="motivQuote">"The only way to do great work is to love what you do."</div>
-        <div class="quote-author" id="motivAuthor">— Steve Jobs</div>
-    </div>
+    <!-- دکمه پومودورو -->
+    <div class="pomodorro-float" id="pomodorroBtn" title="تایمر پومودورو">🍅</div>
 
-    <!-- کارت تیکه کتاب -->
-    <div class="card">
-        <h2>📖 تکه‌ای از کتاب‌ها</h2>
-        <div class="quote-text" id="bookQuote">"It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife."</div>
-        <div class="quote-author" id="bookAuthor">— Jane Austen, Pride and Prejudice</div>
-    </div>
-
-    <!-- کارت گالری تصاویر -->
-    <div class="card">
-        <h2>🖼️ گالری 4K</h2>
-        <div class="image-grid">
-            <div class="img-card"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400" alt="art"></div>
-            <div class="img-card"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400" alt="abstract"></div>
-            <div class="img-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=400" alt="chemical"></div>
+    <!-- مودال پومودورو -->
+    <div class="modal" id="pomodorroModal">
+        <div class="modal-content">
+            <h2 style="color:var(--bb-green);">🍅 تایمر پومودورو</h2>
+            <div class="timer-container">
+                <svg class="progress-ring" viewBox="0 0 180 180">
+                    <circle class="ring-bg" cx="90" cy="90" r="80" />
+                    <circle class="ring-fill" id="ringFill" cx="90" cy="90" r="80" />
+                </svg>
+                <div class="tomato-emoji">🍅</div>
+            </div>
+            <div class="timer-display" id="timerDisplay">25:00</div>
+            <div class="modal-buttons">
+                <button class="btn btn-start" id="startPom">شروع</button>
+                <button class="btn btn-reset" id="resetPom">تنظیم مجدد</button>
+            </div>
+            <button class="btn btn-close" id="closePom">بستن</button>
         </div>
     </div>
-</div>
 
-<!-- دکمه شناور پومودورو -->
-<button class="pomodorro-float" id="pomodorroBtn" title="تایمر پومودورو">🍅</button>
+    <audio id="audioPlayer"></audio>
 
-<!-- مودال پومودورو -->
-<div class="modal" id="pomodorroModal">
-    <div class="modal-content">
-        <h2>🍅 تایمر پومودورو</h2>
-        <div class="timer-circle" id="timerDisplay">25:00</div>
-        <div class="modal-buttons">
-            <button class="btn btn-start" id="startPom">شروع</button>
-            <button class="btn btn-reset" id="resetPom">تنظیم مجدد</button>
-        </div>
-        <button class="btn btn-reset" style="margin-top:15px;" id="closePom">بستن</button>
-    </div>
-</div>
-
-<script>
-    // ==================== تقویم شمسی ساده ====================
-    function getPersianDate() {
-        const now = new Date();
-        const options = { year: 'numeric', month: 'long', day: 'numeric', calendar: 'persian' };
-        try {
-            return now.toLocaleDateString('fa-IR', options);
-        } catch(e) {
-            // Fallback
-            return now.toLocaleDateString('fa-IR');
-        }
-    }
-    const dateStr = getPersianDate().split(' ');
-    document.getElementById('dateWidget').innerHTML = `
-        <div class="date-day">${dateStr[2] || ''}</div>
-        <div><div class="date-month">${dateStr[1] || ''}</div><div class="date-year">${dateStr[0] || ''}</div></div>
-    `;
-
-    // ==================== جملات انگیزشی ====================
-    const motivations = [
-        { text: "The only way to do great work is to love what you do.", author: "Steve Jobs" },
-        { text: "I have not failed. I've just found 10,000 ways that won't work.", author: "Thomas Edison" },
-        { text: "Success is not final, failure is not fatal: It is the courage to continue that counts.", author: "Winston Churchill" },
-        { text: "Your time is limited, don't waste it living someone else's life.", author: "Steve Jobs" },
-        { text: "The future belongs to those who believe in the beauty of their dreams.", author: "Eleanor Roosevelt" }
-    ];
-    const randMotiv = motivations[Math.floor(Math.random() * motivations.length)];
-    document.getElementById('motivQuote').textContent = `"${randMotiv.text}"`;
-    document.getElementById('motivAuthor').textContent = `— ${randMotiv.author}`;
-
-    // ==================== نقل‌قول کتاب‌ها ====================
-    const bookQuotes = [
-        { text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", author: "Jane Austen, Pride and Prejudice" },
-        { text: "All happy families are alike; each unhappy family is unhappy in its own way.", author: "Leo Tolstoy, Anna Karenina" },
-        { text: "It was the best of times, it was the worst of times.", author: "Charles Dickens, A Tale of Two Cities" },
-        { text: "Whatever our souls are made of, his and mine are the same.", author: "Emily Brontë, Wuthering Heights" },
-        { text: "So we beat on, boats against the current, borne back ceaselessly into the past.", author: "F. Scott Fitzgerald, The Great Gatsby" }
-    ];
-    const randBook = bookQuotes[Math.floor(Math.random() * bookQuotes.length)];
-    document.getElementById('bookQuote').textContent = `"${randBook.text}"`;
-    document.getElementById('bookAuthor').textContent = `— ${randBook.author}`;
-
-    // ==================== پومودورو ====================
-    const pomoModal = document.getElementById('pomodorroModal');
-    const pomoBtn = document.getElementById('pomodorroBtn');
-    const timerDisplay = document.getElementById('timerDisplay');
-    const startBtn = document.getElementById('startPom');
-    const resetBtn = document.getElementById('resetPom');
-    const closeBtn = document.getElementById('closePom');
-
-    let pomoInterval = null;
-    let pomoSeconds = 1500; // 25 دقیقه
-    let isRunning = false;
-
-    function updateTimerDisplay() {
-        const mins = Math.floor(pomoSeconds / 60);
-        const secs = pomoSeconds % 60;
-        timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
-    }
-
-    function startPomodorro() {
-        if (isRunning) return;
-        isRunning = true;
-        startBtn.textContent = 'توقف';
-        pomoInterval = setInterval(() => {
-            if (pomoSeconds <= 0) {
-                clearInterval(pomoInterval);
-                isRunning = false;
-                startBtn.textContent = 'شروع';
-                alert('🍅 پومودورو تموم شد! استراحت کن.');
-                pomoSeconds = 1500;
-                updateTimerDisplay();
-            } else {
-                pomoSeconds--;
-                updateTimerDisplay();
+    <script>
+        // ==================== تقویم شمسی و ساعت ====================
+        function updateDateTime() {
+            const now = new Date();
+            // تاریخ شمسی
+            try {
+                const persianDate = now.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric', calendar: 'persian' });
+                const parts = persianDate.split(' ');
+                document.getElementById('persianYear').textContent = parts[0] || '';
+                document.getElementById('persianMonth').textContent = parts[1] || '';
+                document.getElementById('persianDay').textContent = parts[2] || '';
+            } catch(e) {
+                // fallback
+                document.getElementById('persianDay').textContent = now.getDate();
+                document.getElementById('persianMonth').textContent = now.toLocaleDateString('fa-IR', { month: 'long' });
+                document.getElementById('persianYear').textContent = now.getFullYear();
             }
-        }, 1000);
-    }
-
-    function resetPomodorro() {
-        clearInterval(pomoInterval);
-        isRunning = false;
-        startBtn.textContent = 'شروع';
-        pomoSeconds = 1500;
-        updateTimerDisplay();
-    }
-
-    startBtn.addEventListener('click', () => {
-        if (isRunning) {
-            resetPomodorro();
-        } else {
-            startPomodorro();
+            // ساعت
+            const timeStr = now.toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('liveTime').textContent = timeStr;
         }
-    });
-    resetBtn.addEventListener('click', resetPomodorro);
-    pomoBtn.addEventListener('click', () => pomoModal.classList.add('active'));
-    closeBtn.addEventListener('click', () => pomoModal.classList.remove('active'));
-    pomoModal.addEventListener('click', (e) => {
-        if (e.target === pomoModal) pomoModal.classList.remove('active');
-    });
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
 
-    updateTimerDisplay();
-</script>
+        // ==================== جملات انگیزشی و کتاب ====================
+        const motivQuotes = [
+            { text: "تنها راه انجام کار بزرگ، عشق ورزیدن به کاری است که انجام می‌دهی.", author: "استیو جابز" },
+            { text: "من شکست نخورده‌ام. فقط ۱۰,۰۰۰ راه پیدا کرده‌ام که کار نمی‌کند.", author: "توماس ادیسون" },
+            { text: "موفقیت نهایی نیست، شکست کشنده نیست: این شجاعت ادامه دادن است که اهمیت دارد.", author: "وینستون چرچیل" },
+            { text: "زمان تو محدود است، آن را با زندگی کردن به روش دیگران هدر نده.", author: "استیو جابز" },
+            { text: "آینده متعلق به کسانی است که به زیبایی رویاهایشان ایمان دارند.", author: "النور روزولت" }
+        ];
+        const randM = motivQuotes[Math.floor(Math.random() * motivQuotes.length)];
+        document.getElementById('motivQuote').textContent = `"${randM.text}"`;
+        document.getElementById('motivAuthor').textContent = `— ${randM.author}`;
+
+        const bookQuotes = [
+            { text: "حقیقتاً مسلم است که یک مرد مجرد با ثروتی خوب، نیازمند یک همسر است.", author: "جین آستن، غرور و تعصب" },
+            { text: "همه خانواده‌های خوشبخت شبیه هم هستند؛ هر خانواده ناخوشبختی به شیوه خودش ناخوشبخت است.", author: "لئو تولستوی، آنا کارنینا" },
+            { text: "بهترین زمان‌ها بود، بدترین زمان‌ها بود.", author: "چارلز دیکنز، داستان دو شهر" },
+            { text: "هرچه روح ما از آن ساخته شده باشد، روح او و من یکی است.", author: "امیلی برونته، بلندی‌های بادگیر" },
+            { text: "پس ما پیش می‌رویم، قایق‌ها بر خلاف جریان، پیوسته به گذشته بازگردانده می‌شویم.", author: "اف. اسکات فیتزجرالد، گتسبی بزرگ" }
+        ];
+        const randB = bookQuotes[Math.floor(Math.random() * bookQuotes.length)];
+        document.getElementById('bookQuote').textContent = `"${randB.text}"`;
+        document.getElementById('bookAuthor').textContent = `— ${randB.author}`;
+
+        // ==================== پلیر موسیقی ====================
+        const songs = [
+            { title: "Bin Jip (3-Iron)", artist: "Natacha Atlas — Slvian", url: "https://dl.ritmahang.com/audio/arshive/natacha%20atlas%20-%20bin-jip%20(3-iron)%20ost%202004%20-%20slvian%20(www.delshekastegan.ir).mp3" },
+            { title: "Maison", artist: "Emilio Piano x Lucie", url: "https://dl.musicviral.ir/Music/04-04/Emilio%20Piano%20x%20Lucie%20-%20Maison.mp3" },
+            { title: "Summer Overture", artist: "Summer (Requiem for a Dream)", url: "https://www.musicdagh.ir/wp-content/uploads/2018/12/Summer-Overture-Summer.mp3" },
+            { title: "Lux Aeterna", artist: "Winter (Requiem for a Dream)", url: "https://www.musicdagh.ir/wp-content/uploads/2018/12/Lux-Aeterna-Winter.mp3" },
+            { title: "Roads", artist: "Portishead", url: "https://files.musicfeed.ir/2020/07/Portishead-Roads.mp3" },
+            { title: "Game of Thrones", artist: "Ramin Djawadi", url: "https://irsv.upmusics.com/Downloads/Musics/Ramin%20Djawadi%20%7C%20Game%20Of%20Thrones%20(320).mp3" },
+            { title: "Hostage", artist: "Billie Eilish", url: "https://sv.jenabmusic.com/music/2026/05/13/Billie-Eilish-Hostage.mp3" },
+            { title: "Bad Guy", artist: "Billie Eilish", url: "https://sv.jenabmusic.com/music/2025/03/07/Billie%20Eilish%20-%20Bad%20Guy.Mp3" },
+            { title: "No Time To Die", artist: "Billie Eilish", url: "https://sv.jenabmusic.com/music/2025/03/07/Billie%20Eilish%20-%20No%20Time%20To%20Die.Mp3" }
+        ];
+
+        const audio = document.getElementById('audioPlayer');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const progressFill = document.getElementById('progressFill');
+        const progressBar = document.getElementById('progressBar');
+        const currentTimeEl = document.getElementById('currentTime');
+        const durationTimeEl = document.getElementById('durationTime');
+        const trackTitle = document.getElementById('trackTitle');
+        const trackArtist = document.getElementById('trackArtist');
+        const vinylIcon = document.getElementById('vinylIcon');
+
+        let currentTrack = 0;
+        let isPlaying = false;
+
+        function loadTrack(index) {
+            const track = songs[index];
+            audio.src = track.url;
+            trackTitle.textContent = track.title;
+            trackArtist.textContent = track.artist;
+            audio.load();
+            progressFill.style.width = '0%';
+            currentTimeEl.textContent = '0:00';
+            durationTimeEl.textContent = '0:00';
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play();
+                playPauseBtn.textContent = '⏸️';
+                vinylIcon.classList.add('playing');
+                isPlaying = true;
+            } else {
+                audio.pause();
+                playPauseBtn.textContent = '▶️';
+                vinylIcon.classList.remove('playing');
+                isPlaying = false;
+            }
+        }
+
+        function formatTime(seconds) {
+            if (isNaN(seconds)) return '0:00';
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds % 60);
+            return `${mins}:${String(secs).padStart(2, '0')}`;
+        }
+
+        audio.addEventListener('timeupdate', () => {
+            const pct = (audio.currentTime / audio.duration) * 100 || 0;
+            progressFill.style.width = pct + '%';
+            currentTimeEl.textContent = formatTime(audio.currentTime);
+            if (audio.duration) durationTimeEl.textContent = formatTime(audio.duration);
+        });
+
+        audio.addEventListener('ended', () => {
+            currentTrack = (currentTrack + 1) % songs.length;
+            loadTrack(currentTrack);
+            audio.play();
+            playPauseBtn.textContent = '⏸️';
+            vinylIcon.classList.add('playing');
+        });
+
+        progressBar.addEventListener('click', (e) => {
+            const rect = progressBar.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const width = rect.width;
+            audio.currentTime = (x / width) * audio.duration;
+        });
+
+        playPauseBtn.addEventListener('click', togglePlay);
+        document.getElementById('prevTrack').addEventListener('click', () => {
+            currentTrack = (currentTrack - 1 + songs.length) % songs.length;
+            loadTrack(currentTrack);
+            audio.play();
+            playPauseBtn.textContent = '⏸️';
+            vinylIcon.classList.add('playing');
+        });
+        document.getElementById('nextTrack').addEventListener('click', () => {
+            currentTrack = (currentTrack + 1) % songs.length;
+            loadTrack(currentTrack);
+            audio.play();
+            playPauseBtn.textContent = '⏸️';
+            vinylIcon.classList.add('playing');
+        });
+
+        loadTrack(0);
+
+        // ==================== پومودورو ====================
+        const pomoModal = document.getElementById('pomodorroModal');
+        const pomoBtn = document.getElementById('pomodorroBtn');
+        const timerDisplay = document.getElementById('timerDisplay');
+        const ringFill = document.getElementById('ringFill');
+        const startBtn = document.getElementById('startPom');
+        const resetBtn = document.getElementById('resetPom');
+        const closeBtn = document.getElementById('closePom');
+
+        const TOTAL_SECONDS = 1500; // 25 دقیقه
+        let pomoInterval = null;
+        let pomoSeconds = TOTAL_SECONDS;
+        let isRunning = false;
+        const CIRCUMFERENCE = 2 * Math.PI * 80; // 502.65
+
+        function updatePomodoroUI() {
+            const mins = Math.floor(pomoSeconds / 60);
+            const secs = pomoSeconds % 60;
+            timerDisplay.textContent = `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+            const offset = CIRCUMFERENCE * (1 - pomoSeconds / TOTAL_SECONDS);
+            ringFill.style.strokeDashoffset = offset;
+        }
+
+        function startPomodorro() {
+            if (isRunning) return;
+            isRunning = true;
+            startBtn.textContent = 'توقف';
+            pomoInterval = setInterval(() => {
+                if (pomoSeconds <= 0) {
+                    clearInterval(pomoInterval);
+                    isRunning = false;
+                    startBtn.textContent = 'شروع';
+                    alert('🍅 زمان استراحت!');
+                    pomoSeconds = TOTAL_SECONDS;
+                    updatePomodoroUI();
+                } else {
+                    pomoSeconds--;
+                    updatePomodoroUI();
+                }
+            }, 1000);
+        }
+
+        function resetPomodorro() {
+            clearInterval(pomoInterval);
+            isRunning = false;
+            startBtn.textContent = 'شروع';
+            pomoSeconds = TOTAL_SECONDS;
+            updatePomodoroUI();
+        }
+
+        startBtn.addEventListener('click', () => {
+            if (isRunning) {
+                resetPomodorro();
+            } else {
+                startPomodorro();
+            }
+        });
+        resetBtn.addEventListener('click', resetPomodorro);
+        pomoBtn.addEventListener('click', () => pomoModal.classList.add('active'));
+        closeBtn.addEventListener('click', () => pomoModal.classList.remove('active'));
+        pomoModal.addEventListener('click', (e) => {
+            if (e.target === pomoModal) pomoModal.classList.remove('active');
+        });
+
+        // مقداردهی اولیه
+        ringFill.style.strokeDasharray = CIRCUMFERENCE;
+        ringFill.style.strokeDashoffset = '0';
+        updatePomodoroUI();
+    </script>
 </body>
 </html>
