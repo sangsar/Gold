@@ -28,7 +28,6 @@
             align-items: center;
         }
 
-        /* پس‌زمینه: ابر و ستاره */
         .sky-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0;
@@ -43,35 +42,47 @@
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.4); }
         }
+
+        /* ابر پشمالو با سایه‌های متعدد (بدون دایره‌های تنها) */
         .cloud {
             position: absolute;
             background: #fff;
-            border-radius: 50%;
-            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            border-radius: 40% 50% 30% 50%;
+            box-shadow:
+                4px -4px 0 2px #fff,
+                8px -1px 0 3px #fff,
+                12px 2px 0 2px #fff,
+                15px -3px 0 1px #fff,
+                -4px 3px 0 3px #fff,
+                -8px -2px 0 2px #fff,
+                -10px 4px 0 1px #fff,
+                2px 5px 0 2px #fff,
+                6px 6px 0 2px #fff,
+                -2px 6px 0 2px #fff,
+                9px 5px 0 2px #fff,
+                -6px -5px 0 2px #fff;
             animation: floatCloud 18s linear infinite;
-            opacity: 0.9;
-        }
-        .cloud::before, .cloud::after {
-            content: "";
-            position: absolute;
-            background: inherit;
-            border-radius: 50%;
-        }
-        .cloud::before {
-            width: 70%; height: 90%;
-            top: -45%; left: 8%;
-        }
-        .cloud::after {
-            width: 55%; height: 80%;
-            top: -30%; right: 8%;
+            opacity: 0.95;
         }
         .cloud.pinkish {
-            background: rgba(255,153,200,0.5);
-            box-shadow: 0 0 12px rgba(255,153,200,0.7);
+            background: rgba(255,153,200,0.7);
+            box-shadow:
+                4px -4px 0 2px rgba(255,153,200,0.7),
+                8px -1px 0 3px rgba(255,153,200,0.7),
+                12px 2px 0 2px rgba(255,153,200,0.7),
+                15px -3px 0 1px rgba(255,153,200,0.7),
+                -4px 3px 0 3px rgba(255,153,200,0.7),
+                -8px -2px 0 2px rgba(255,153,200,0.7),
+                -10px 4px 0 1px rgba(255,153,200,0.7),
+                2px 5px 0 2px rgba(255,153,200,0.7),
+                6px 6px 0 2px rgba(255,153,200,0.7),
+                -2px 6px 0 2px rgba(255,153,200,0.7),
+                9px 5px 0 2px rgba(255,153,200,0.7),
+                -6px -5px 0 2px rgba(255,153,200,0.7);
         }
         @keyframes floatCloud {
-            0% { transform: translateX(0) translateY(0); opacity: 0.9; }
-            100% { transform: translateX(calc(100vw + 150px)) translateY(-20px); opacity: 0.6; }
+            0% { transform: translateX(0) translateY(0); opacity: 0.95; }
+            100% { transform: translateX(calc(100vw + 150px)) translateY(-20px); opacity: 0.65; }
         }
 
         .dashboard {
@@ -93,15 +104,15 @@
         }
         .card:hover { border-color: var(--pink); box-shadow: 0 0 25px rgba(255,153,200,0.3); transform: translateY(-3px); }
 
-        /* لوگوها: فقط متن، کنار هم، بزرگتر، بدون کادر */
+        /* لوگوها */
         .logo-row {
             display: flex; flex-direction: row; align-items: center; justify-content: center;
-            gap: 20px; /* فاصله کم بینشان */
+            gap: 20px;
         }
         .logo-link {
             text-decoration: none;
             font-family: 'Creepster', cursive;
-            font-size: 2.6rem; /* بزرگتر از قبل */
+            font-size: 2.6rem;
             color: #fff;
             text-shadow: 0 0 15px rgba(255,153,200,0.8);
             line-height: 1.2;
@@ -115,11 +126,9 @@
             transform: scale(1.05);
             text-shadow: 0 0 25px rgba(255,153,200,1);
         }
-        .logo-link:first-child {
-            color: var(--pink);
-        }
+        .logo-link:first-child { color: var(--pink); }
 
-        /* بقیه کارت‌ها (بدون تغییر) */
+        /* بقیه کارت‌ها */
         .date-widget {
             background: linear-gradient(135deg, rgba(114,9,183,0.3) 0%, rgba(20,10,40,0.9) 100%);
             border-radius: 24px; padding: 20px; text-align: center;
@@ -201,7 +210,6 @@
     <div class="sky-bg" id="skyBg"></div>
 
     <div class="dashboard">
-        <!-- فقط لوگو خالی بدون کادر -->
         <div class="card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; padding: 0;">
             <div class="logo-row">
                 <a href="https://serialblog1.top/" target="_blank" class="logo-link">DONYAY<br>SERIAL</a>
@@ -389,10 +397,10 @@
         window.addEventListener('click', e => { if (e.target === pomoModal) pomoModal.classList.remove('active'); });
         updatePomUI();
 
-        // ========== ابر و ستاره‌های جدید ==========
+        // ========== ابر و ستاره‌های جدید (ابرهای پشمالو با سایه) ==========
         function createBackgroundEffects() {
             const sky = document.getElementById('skyBg');
-            // ستاره‌های پنج‌پر
+            // ستاره‌ها
             for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
@@ -404,16 +412,16 @@
                 star.style.animationDelay = Math.random() * 3 + 's';
                 sky.appendChild(star);
             }
-            // ابرهای خیلی کوچک (نصف نوک انگشت ≈ 10-15px)
+            // ابرهای کوچک پشمالو
             for (let i = 0; i < 18; i++) {
                 const cloud = document.createElement('div');
                 const isPink = Math.random() > 0.6;
                 cloud.className = isPink ? 'cloud pinkish' : 'cloud';
-                const size = Math.random() * 10 + 8; // 8 تا 18 پیکسل
+                const size = Math.random() * 6 + 5; // 5-11px (خیلی کوچک)
                 cloud.style.width = size + 'px';
                 cloud.style.height = size * 0.7 + 'px';
                 cloud.style.top = Math.random() * 90 + '%';
-                cloud.style.left = -size + 'px';
+                cloud.style.left = -size * 2 + 'px'; // شروع از بیرون صفحه
                 cloud.style.animationDuration = (Math.random() * 15 + 10) + 's';
                 cloud.style.animationDelay = Math.random() * 8 + 's';
                 sky.appendChild(cloud);
