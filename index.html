@@ -16,7 +16,7 @@
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            background: var(--dark-bg);
+            background: linear-gradient(180deg, #2a0a4a 0%, #10002b 100%);
             font-family: 'Vazirmatn', sans-serif;
             color: var(--text);
             min-height: 100vh;
@@ -26,18 +26,10 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image: url('https://images.pexels.com/photos/1671325/pexels-photo-1671325.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
         }
-        body::after {
-            content: "";
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(16, 0, 43, 0.75);
-            backdrop-filter: blur(3px);
-            z-index: -1;
-        }
+        /* حذف overlay قبلی */
+        body::after { display: none; }
+
         .dashboard {
             position: relative; z-index: 1;
             max-width: 1000px; width: 100%;
@@ -57,15 +49,16 @@
         }
         .card:hover { border-color: var(--pink); box-shadow: 0 0 25px rgba(255,153,200,0.3); transform: translateY(-3px); }
 
-        /* لوگوهای یکرنگ و چسبیده */
+        /* لوگوهای مربع شیشه‌ای صورتی */
         .logo-links {
             display: flex; gap: 0; justify-content: center;
         }
         .logo-btn {
             flex: 1; max-width: 170px;
-            background: rgba(255,255,255,0.07);
+            background: rgba(255,153,200,0.15);
             backdrop-filter: blur(12px);
-            border: none;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 0;   /* مربع */
             padding: 14px 18px;
             text-align: center;
             cursor: pointer;
@@ -80,16 +73,13 @@
             display: flex; align-items: center; justify-content: center;
         }
         .logo-btn:first-child {
-            border-radius: 20px 0 0 20px;
-            background: rgba(255,153,200,0.2);
+            border-radius: 20px 0 0 20px; /* گوشه‌های گرد فقط در طرفین بیرونی */
         }
         .logo-btn:last-child {
             border-radius: 0 20px 20px 0;
-            background: rgba(255,153,200,0.2);
-            border-left: 1px solid rgba(255,255,255,0.2);
         }
         .logo-btn:hover {
-            background: rgba(255,255,255,0.15);
+            background: rgba(255,255,255,0.2);
             box-shadow: 0 0 18px rgba(255,153,200,0.4);
             transform: scale(1.02);
         }
@@ -108,7 +98,7 @@
         .quote-separator { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); margin: 8px 0; }
         .quote-author { color: var(--pink); font-size: 0.8rem; text-align: left; }
 
-        /* دکمه‌های شناور (کوچک‌تر) */
+        /* دکمه‌های شناور */
         .floating-btn {
             position: fixed; z-index: 999;
             width: 50px; height: 50px; border-radius: 50%;
@@ -365,6 +355,65 @@
         document.getElementById('closePom').addEventListener('click', () => pomoModal.classList.remove('active'));
         window.addEventListener('click', e => { if (e.target === pomoModal) pomoModal.classList.remove('active'); });
         updatePomUI();
+
+        // ========== ابر و ستاره‌های پس‌زمینه ==========
+        function createBackgroundEffects() {
+            const bgContainer = document.createElement('div');
+            bgContainer.style.position = 'fixed';
+            bgContainer.style.top = '0';
+            bgContainer.style.left = '0';
+            bgContainer.style.width = '100%';
+            bgContainer.style.height = '100%';
+            bgContainer.style.pointerEvents = 'none';
+            bgContainer.style.zIndex = '0';
+            document.body.prepend(bgContainer);
+
+            // ستاره‌ها
+            for (let i = 0; i < 50; i++) {
+                const star = document.createElement('div');
+                const size = Math.random() * 3 + 2;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                star.style.background = '#fff';
+                star.style.borderRadius = '50%';
+                star.style.position = 'absolute';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.animation = `twinkle ${Math.random() * 3 + 2}s infinite ease-in-out ${Math.random() * 2}s`;
+                bgContainer.appendChild(star);
+            }
+
+            // ابرهای کوچک
+            for (let i = 0; i < 20; i++) {
+                const cloud = document.createElement('div');
+                const size = Math.random() * 60 + 40;
+                cloud.style.width = size + 'px';
+                cloud.style.height = size * 0.6 + 'px';
+                cloud.style.background = Math.random() > 0.5 ? 'rgba(255,255,255,0.25)' : 'rgba(255,153,200,0.2)';
+                cloud.style.borderRadius = '50%';
+                cloud.style.position = 'absolute';
+                cloud.style.top = Math.random() * 90 + '%';
+                cloud.style.left = -size + 'px';
+                cloud.style.filter = 'blur(3px)';
+                cloud.style.animation = `floatCloud ${Math.random() * 15 + 15}s linear infinite ${Math.random() * 10}s`;
+                bgContainer.appendChild(cloud);
+            }
+
+            // استایل‌های انیمیشن
+            const styleSheet = document.createElement('style');
+            styleSheet.textContent = `
+                @keyframes twinkle {
+                    0%, 100% { opacity: 0.3; transform: scale(1); }
+                    50% { opacity: 1; transform: scale(1.4); }
+                }
+                @keyframes floatCloud {
+                    0% { transform: translateX(0) translateY(0); }
+                    100% { transform: translateX(calc(100vw + 100px)) translateY(-20px); }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        }
+        window.addEventListener('load', createBackgroundEffects);
     </script>
 </body>
 </html>
