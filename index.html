@@ -28,12 +28,11 @@
             align-items: center;
         }
 
-        /* ========== پس‌زمینه: ابر و ستاره (فقط این بخش تغییر کرده) ========== */
+        /* پس‌زمینه: ابر و ستاره */
         .sky-bg {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             pointer-events: none; z-index: 0;
         }
-        /* ستاره‌های پنج‌پر */
         .star {
             position: absolute;
             background: #fff;
@@ -44,34 +43,37 @@
             0%, 100% { opacity: 0.3; transform: scale(1); }
             50% { opacity: 1; transform: scale(1.4); }
         }
-        /* ابرهای سفید (شبیه ابر انیمیشنی) */
         .cloud {
             position: absolute;
             background: #fff;
             border-radius: 50%;
-            box-shadow: 0 0 15px rgba(255,255,255,0.5);
-            animation: floatCloud 20s linear infinite;
+            box-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: floatCloud 18s linear infinite;
+            opacity: 0.9;
         }
         .cloud::before, .cloud::after {
             content: "";
             position: absolute;
-            background: #fff;
+            background: inherit;
             border-radius: 50%;
         }
         .cloud::before {
-            width: 60%; height: 80%;
-            top: -40%; left: 10%;
+            width: 70%; height: 90%;
+            top: -45%; left: 8%;
         }
         .cloud::after {
-            width: 50%; height: 70%;
-            top: -25%; right: 10%;
+            width: 55%; height: 80%;
+            top: -30%; right: 8%;
+        }
+        .cloud.pinkish {
+            background: rgba(255,153,200,0.5);
+            box-shadow: 0 0 12px rgba(255,153,200,0.7);
         }
         @keyframes floatCloud {
-            0% { transform: translateX(0) translateY(0); opacity: 0.8; }
-            100% { transform: translateX(calc(100vw + 200px)) translateY(-30px); opacity: 0.4; }
+            0% { transform: translateX(0) translateY(0); opacity: 0.9; }
+            100% { transform: translateX(calc(100vw + 150px)) translateY(-20px); opacity: 0.6; }
         }
 
-        /* ========== داشبورد (بدون تغییر) ========== */
         .dashboard {
             position: relative; z-index: 1;
             max-width: 1000px; width: 100%;
@@ -91,49 +93,33 @@
         }
         .card:hover { border-color: var(--pink); box-shadow: 0 0 25px rgba(255,153,200,0.3); transform: translateY(-3px); }
 
-        /* ========== لوگوها در مربع بزرگ (فقط این بخش تغییر کرده) ========== */
-        .logo-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
-            border: 2px solid rgba(255,153,200,0.4);
-            border-radius: 30px;
-            padding: 25px 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 25px;
-            box-shadow: 0 0 30px rgba(255,153,200,0.15);
+        /* لوگوها: فقط متن، کنار هم، بزرگتر، بدون کادر */
+        .logo-row {
+            display: flex; flex-direction: row; align-items: center; justify-content: center;
+            gap: 20px; /* فاصله کم بینشان */
         }
-        .logo-panel .logo-btn {
-            background: rgba(255,255,255,0.08);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.2);
-            border-radius: 20px;
-            padding: 18px 28px;
-            font-family: 'Creepster', cursive;
-            font-size: 2rem;
-            color: #fff;
-            text-shadow: 0 0 12px rgba(0,0,0,0.6);
-            letter-spacing: 1px;
-            line-height: 1.3;
+        .logo-link {
             text-decoration: none;
+            font-family: 'Creepster', cursive;
+            font-size: 2.6rem; /* بزرگتر از قبل */
+            color: #fff;
+            text-shadow: 0 0 15px rgba(255,153,200,0.8);
+            line-height: 1.2;
             text-align: center;
-            transition: all 0.25s;
-            cursor: pointer;
-            flex: 1;
-            max-width: 200px;
+            transition: transform 0.2s, text-shadow 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
         }
-        .logo-panel .logo-btn:hover {
-            background: rgba(255,255,255,0.15);
-            border-color: var(--pink);
-            box-shadow: 0 0 25px rgba(255,153,200,0.4);
-            transform: scale(1.04);
+        .logo-link:hover {
+            transform: scale(1.05);
+            text-shadow: 0 0 25px rgba(255,153,200,1);
         }
-        .logo-panel .logo-btn:first-child {
+        .logo-link:first-child {
             color: var(--pink);
         }
 
-        /* ========== سایر کارت‌ها (بدون تغییر) ========== */
+        /* بقیه کارت‌ها (بدون تغییر) */
         .date-widget {
             background: linear-gradient(135deg, rgba(114,9,183,0.3) 0%, rgba(20,10,40,0.9) 100%);
             border-radius: 24px; padding: 20px; text-align: center;
@@ -157,7 +143,6 @@
             text-decoration: none;
         }
         .floating-btn:hover { transform: scale(1.1); }
-
         .player-float {
             bottom: 30px; right: 30px;
             background: transparent;
@@ -191,7 +176,6 @@
             border: 1px solid rgba(255,255,255,0.15); border-radius: 30px;
             padding: 25px; max-width: 400px; width: 90%;
             max-height: 80vh; overflow-y: auto; color: #fff;
-            box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
         #pomodorroModal .modal-content {
             text-align: center; max-width: 100vw; max-height: 100vh;
@@ -211,27 +195,20 @@
         .btn-glass:hover { background: rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(255,153,200,0.4); transform: translateY(-2px); }
         .btn-close { background: rgba(255,255,255,0.05); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); color: #fff; margin-top: 15px; border-radius: 25px; }
         .btn-close:hover { background: rgba(255,255,255,0.15); }
-        @media (max-width: 768px) {
-            .dashboard { grid-template-columns: 1fr; }
-            .logo-panel { flex-direction: column; gap: 15px; }
-            .logo-panel .logo-btn { max-width: 100%; font-size: 1.6rem; }
-        }
     </style>
 </head>
 <body>
-    <!-- پس‌زمینهٔ ابر و ستاره -->
     <div class="sky-bg" id="skyBg"></div>
 
     <div class="dashboard">
-        <!-- لوگوها در مربع بزرگ -->
+        <!-- فقط لوگو خالی بدون کادر -->
         <div class="card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none; padding: 0;">
-            <div class="logo-panel">
-                <a href="https://serialblog1.top/" target="_blank" class="logo-btn">DONYAY<br>SERIAL</a>
-                <a href="https://www.nilfgaard.top/" target="_blank" class="logo-btn">BIA 2<br>MOVE</a>
+            <div class="logo-row">
+                <a href="https://serialblog1.top/" target="_blank" class="logo-link">DONYAY<br>SERIAL</a>
+                <a href="https://www.nilfgaard.top/" target="_blank" class="logo-link">BIA 2<br>MOVE</a>
             </div>
         </div>
 
-        <!-- سایر بخش‌ها (بدون تغییر) -->
         <div class="card date-widget">
             <div class="day-number" id="todayDay">۱۵</div>
             <div class="day-detail" id="todayDetail">چهارشنبه، اردیبهشت ۱۴۰۴</div>
@@ -412,11 +389,11 @@
         window.addEventListener('click', e => { if (e.target === pomoModal) pomoModal.classList.remove('active'); });
         updatePomUI();
 
-        // ========== ایجاد ابر و ستاره‌های پس‌زمینه ==========
+        // ========== ابر و ستاره‌های جدید ==========
         function createBackgroundEffects() {
             const sky = document.getElementById('skyBg');
             // ستاره‌های پنج‌پر
-            for (let i = 0; i < 60; i++) {
+            for (let i = 0; i < 50; i++) {
                 const star = document.createElement('div');
                 star.className = 'star';
                 const size = Math.random() * 4 + 2;
@@ -425,20 +402,20 @@
                 star.style.top = Math.random() * 100 + '%';
                 star.style.left = Math.random() * 100 + '%';
                 star.style.animationDelay = Math.random() * 3 + 's';
-                star.style.animationDuration = (Math.random() * 3 + 2) + 's';
                 sky.appendChild(star);
             }
-            // ابرهای سفید
-            for (let i = 0; i < 10; i++) {
+            // ابرهای خیلی کوچک (نصف نوک انگشت ≈ 10-15px)
+            for (let i = 0; i < 18; i++) {
                 const cloud = document.createElement('div');
-                cloud.className = 'cloud';
-                const size = Math.random() * 80 + 60;
+                const isPink = Math.random() > 0.6;
+                cloud.className = isPink ? 'cloud pinkish' : 'cloud';
+                const size = Math.random() * 10 + 8; // 8 تا 18 پیکسل
                 cloud.style.width = size + 'px';
-                cloud.style.height = size * 0.5 + 'px';
-                cloud.style.top = Math.random() * 80 + '%';
+                cloud.style.height = size * 0.7 + 'px';
+                cloud.style.top = Math.random() * 90 + '%';
                 cloud.style.left = -size + 'px';
-                cloud.style.animationDuration = (Math.random() * 20 + 15) + 's';
-                cloud.style.animationDelay = Math.random() * 10 + 's';
+                cloud.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                cloud.style.animationDelay = Math.random() * 8 + 's';
                 sky.appendChild(cloud);
             }
         }
