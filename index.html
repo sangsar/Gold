@@ -4,19 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donyay Serial | دنیای سریال</title>
-    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=Orbitron:wght@500;700;900&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,700&family=Orbitron:wght@500;700;900&family=Special+Elite&family=Vazirmatn:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bb-green: #1c8139;
             --bb-yellow: #f5c518;
             --bb-red: #e50914;
             --bb-dark: #0a0a0a;
-            --card-bg: rgba(20, 20, 20, 0.9);
-            --glass: rgba(25, 25, 25, 0.75);
+            --card-bg: rgba(20, 20, 20, 0.85);
             --text: #e0e0e0;
-            --metal-light: #d4d4d4;
-            --metal-mid: #9a9a9a;
-            --metal-dark: #5a5a5a;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -30,24 +26,27 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-image:
-                radial-gradient(circle at 20% 30%, rgba(28,129,57,0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(229,9,20,0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, rgba(245,197,24,0.05) 0%, transparent 70%);
+            /* تصویر پس‌زمینه هایزنبرگ با overlay */
+            background-image: url('https://wallpapercave.com/wp/wp1822734.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
         }
-        .particles {
+        /* overlay تیره برای خوانایی */
+        body::after {
+            content: "";
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            pointer-events: none; z-index: 0;
+            background: rgba(0,0,0,0.75);
+            z-index: -1;
         }
-        .chem-dot {
-            position: absolute; border-radius: 50%;
-            background: var(--bb-green);
-            box-shadow: 0 0 15px var(--bb-green), 0 0 30px rgba(28,129,57,0.6);
-            animation: float 8s infinite ease-in-out;
-        }
-        @keyframes float {
-            0%,100% { transform: translateY(0) scale(1); opacity: 0.7; }
-            50% { transform: translateY(-30px) scale(1.4); opacity: 1; }
+        /* الگوی شیمیایی تکراری (عناصر جدول تناوبی) */
+        body::before {
+            content: "";
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: repeating-linear-gradient(45deg, rgba(28,129,57,0.05) 0px, rgba(28,129,57,0.05) 2px, transparent 2px, transparent 15px),
+                              repeating-linear-gradient(-45deg, rgba(245,197,24,0.04) 0px, rgba(245,197,24,0.04) 2px, transparent 2px, transparent 15px);
+            pointer-events: none;
+            z-index: 0;
         }
         .dashboard {
             position: relative; z-index: 1;
@@ -71,67 +70,55 @@
             box-shadow: 0 0 30px rgba(245,197,24,0.3);
             transform: translateY(-5px);
         }
-        .logo-grid {
-            display: flex; gap: 20px; align-items: stretch; justify-content: center;
+        /* لوگوها بدون کادر */
+        .logo-links {
+            display: flex; gap: 40px; align-items: center; justify-content: center; flex-wrap: wrap;
         }
-        .logo-box {
-            flex: 1; min-width: 150px; aspect-ratio: 1/1;
-            background: rgba(0,0,0,0.6); border: 2px solid;
-            border-radius: 20px; display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            cursor: pointer; text-decoration: none;
-            transition: all 0.3s; position: relative; overflow: hidden;
-            backdrop-filter: blur(5px);
+        .logo-link {
+            text-decoration: none; color: #fff; transition: 0.3s; text-align: center;
         }
-        .logo-box:hover { transform: scale(1.03); }
-        .logo-box.bb {
-            border-color: var(--bb-green);
-            box-shadow: 0 0 20px rgba(28,129,57,0.4);
-        }
-        .logo-box.bb:hover { border-color: #fff; box-shadow: 0 0 40px rgba(28,129,57,0.8); }
-        .logo-box.st {
-            border-color: var(--bb-red);
-            box-shadow: 0 0 20px rgba(229,9,20,0.4);
-        }
-        .logo-box.st:hover { border-color: #fff; box-shadow: 0 0 40px rgba(229,9,20,0.8); }
-        .bb-text {
-            font-family: 'Special Elite', cursive;
-            font-size: 2rem; font-weight: 700; color: #fff;
+        .logo-link:hover { transform: scale(1.05); filter: drop-shadow(0 0 15px currentColor); }
+        .logo-link.bb .logo-main {
+            font-family: 'Playfair Display', serif; font-style: italic; font-weight: 700;
+            font-size: 2.5rem; color: var(--bb-green); letter-spacing: 1px;
             text-shadow: 0 0 10px var(--bb-green), 0 0 30px var(--bb-green);
-            letter-spacing: 1px; text-align: center; line-height: 1.1;
         }
-        .bb-sub {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem; color: var(--bb-green); letter-spacing: 3px;
-            margin-top: 5px;
-        }
-        .st-text {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.3rem; font-weight: 900; color: #fff;
+        .logo-link.st .logo-main {
+            font-family: 'Orbitron', sans-serif; font-weight: 900; font-size: 2rem;
+            color: var(--bb-red); letter-spacing: 3px;
             text-shadow: 0 0 10px var(--bb-red), 0 0 30px var(--bb-red);
-            letter-spacing: 2px; text-align: center; line-height: 1.1;
         }
-        .st-sub {
-            font-family: 'Special Elite', cursive;
-            font-size: 0.7rem; color: var(--bb-red); letter-spacing: 2px;
-            margin-top: 5px;
+        .logo-sub { display: none; } /* حذف زیرنویس */
+        /* بخش پیشرفت (درصد روز) */
+        .progress-widget {
+            text-align: center;
         }
-        .date-widget {
-            display: flex; align-items: center; justify-content: space-between;
-            background: rgba(0,0,0,0.3); border-radius: 20px; padding: 20px;
-        }
-        .date-day {
+        .progress-label {
             font-family: 'Orbitron', sans-serif;
-            font-size: 4.5rem; color: var(--bb-yellow); line-height: 1;
+            color: var(--bb-yellow); font-size: 1.2rem; margin-bottom: 10px;
         }
-        .date-month-year {
-            display: flex; flex-direction: column;
+        .progress-ring-container {
+            position: relative; width: 120px; height: 120px; margin: 0 auto;
         }
-        .date-month {
-            font-family: 'Vazirmatn', sans-serif;
-            font-size: 1.6rem; font-weight: 700; color: #fff;
+        .progress-ring-container svg { transform: rotate(-90deg); }
+        .progress-ring-container circle {
+            fill: none; stroke-width: 8; stroke-linecap: round;
         }
-        .date-year { font-size: 1rem; color: var(--bb-green); }
+        .prog-bg { stroke: rgba(255,255,255,0.1); }
+        .prog-fill {
+            stroke: var(--bb-yellow);
+            stroke-dasharray: 339.292; /* 2*PI*54 ≈ 339.292 */
+            stroke-dashoffset: 339.292;
+            filter: drop-shadow(0 0 8px var(--bb-yellow));
+            transition: stroke-dashoffset 0.5s ease;
+        }
+        .prog-text {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem; color: #fff;
+        }
+        /* جملات */
         .quote-card { border-right: 5px solid var(--bb-green); padding-right: 15px; }
         .quote-text {
             font-family: 'Special Elite', cursive;
@@ -148,49 +135,46 @@
             margin: 10px 0;
         }
         .quote-author { color: #aaa; font-size: 0.9rem; text-align: left; }
+
+        /* دکمه‌های شناور */
         .floating-btn {
             position: fixed; z-index: 999;
-            width: 60px; height: 60px; border-radius: 50%;
+            width: 65px; height: 65px; border-radius: 50%;
             border: none; cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 10px 25px rgba(0,0,0,0.5);
             transition: 0.3s;
+            animation: spin 4s linear infinite;
         }
-        .floating-btn:hover { transform: scale(1.1); }
+        .floating-btn:hover { animation-play-state: paused; transform: scale(1.1); }
+        /* گرامافون (وینیل) */
         .player-float {
             bottom: 30px; right: 30px;
-            width: 65px; height: 65px;
-            background: radial-gradient(circle at 35% 35%, #3a3a3a, #0a0a0a);
+            background: radial-gradient(circle at 35% 35%, #1a1a1a, #0a0a0a);
             border: 3px solid var(--bb-yellow);
-            animation: vinylSpin 3s linear infinite;
             display: flex; align-items: center; justify-content: center;
-            position: relative;
+            box-shadow: 0 0 20px rgba(245,197,24,0.5);
         }
         .player-float::after {
             content: "";
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
             width: 14px; height: 14px;
             background: radial-gradient(circle, var(--bb-yellow), #b8860b);
             border-radius: 50%;
             box-shadow: 0 0 10px var(--bb-yellow);
         }
-        @keyframes vinylSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        .player-float:hover {
-            animation-play-state: paused;
-            border-color: #fff;
-            box-shadow: 0 0 30px var(--bb-yellow);
-        }
+        /* گوجه */
         .pomodorro-float {
             bottom: 30px; left: 30px;
             background: radial-gradient(circle at 30% 30%, #ff6347, #b22222);
             border: 2px solid #fff;
             font-size: 2rem;
         }
+        @keyframes spin {
+            100% { transform: rotate(360deg); }
+        }
+
+        /* مدال‌ها */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
@@ -277,35 +261,38 @@
         .btn-close { background: var(--bb-red); color: #fff; border-radius: 25px; }
         @media (max-width: 768px) {
             .dashboard { grid-template-columns: 1fr; }
-            .logo-box { min-width: 120px; }
         }
     </style>
 </head>
 <body>
-    <div class="particles" id="particlesContainer"></div>
-
     <div class="dashboard">
-        <div class="card" style="display: flex; flex-direction: column; align-items: center;">
-            <div class="logo-grid">
-                <a href="https://serialblog1.top/" target="_blank" class="logo-box bb">
-                    <span class="bb-text">DONYAY<br>SERIAL</span>
-                    <span class="bb-sub">BREAKING STYLE</span>
+        <!-- لوگوها بدون کادر -->
+        <div class="card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none;">
+            <div class="logo-links">
+                <a href="https://serialblog1.top/" target="_blank" class="logo-link bb">
+                    <div class="logo-main">DONYAY<br>SERIAL</div>
                 </a>
-                <a href="https://www.nilfgaard.top/" target="_blank" class="logo-box st">
-                    <span class="st-text">BIA 2<br>MOVE</span>
-                    <span class="st-sub">STRANGER VIBE</span>
+                <a href="https://www.nilfgaard.top/" target="_blank" class="logo-link st">
+                    <div class="logo-main">BIA 2<br>MOVE</div>
                 </a>
             </div>
         </div>
+
+        <!-- پیشرفت روزانه -->
         <div class="card">
-            <div class="date-widget">
-                <div class="date-day" id="persianDay">۱۵</div>
-                <div class="date-month-year">
-                    <div class="date-month" id="persianMonth">اردیبهشت</div>
-                    <div class="date-year" id="persianYear">۱۴۰۴</div>
+            <div class="progress-widget">
+                <div class="progress-label">میزان پیشرفت امروز</div>
+                <div class="progress-ring-container">
+                    <svg width="120" height="120" viewBox="0 0 120 120">
+                        <circle class="prog-bg" cx="60" cy="60" r="54" />
+                        <circle class="prog-fill" id="dayProgressCircle" cx="60" cy="60" r="54" />
+                    </svg>
+                    <div class="prog-text" id="dayProgressText">0%</div>
                 </div>
             </div>
         </div>
+
+        <!-- جملات -->
         <div class="card quote-card" id="motivCard">
             <div class="quote-text" id="motivEn">"The only way to do great work is to love what you do."</div>
             <div class="quote-separator"></div>
@@ -320,9 +307,11 @@
         </div>
     </div>
 
+    <!-- دکمه‌های شناور -->
     <button class="floating-btn player-float" id="playerFloatBtn" title="پخش موسیقی"></button>
     <button class="floating-btn pomodorro-float" id="pomodorroFloatBtn" title="تایمر پومودورو">🍅</button>
 
+    <!-- مدال پلیر -->
     <div class="modal" id="playerModal">
         <div class="modal-content">
             <h2>🎧 موسیقی</h2>
@@ -343,6 +332,7 @@
         </div>
     </div>
 
+    <!-- مدال پومودورو -->
     <div class="modal" id="pomodorroModal">
         <div class="modal-content">
             <h2>🍅 پومودورو</h2>
@@ -365,6 +355,7 @@
     <audio id="audioPlayer"></audio>
 
     <script>
+        // ========== آهنگ‌ها ==========
         const songs = [
             { title: "Bin Jip (3-Iron)", artist: "Natacha Atlas — Slvian", url: "https://dl.ritmahang.com/audio/arshive/natacha%20atlas%20-%20bin-jip%20(3-iron)%20ost%202004%20-%20slvian%20(www.delshekastegan.ir).mp3" },
             { title: "Maison", artist: "Emilio Piano x Lucie", url: "https://dl.musicviral.ir/Music/04-04/Emilio%20Piano%20x%20Lucie%20-%20Maison.mp3" },
@@ -377,6 +368,7 @@
             { title: "No Time To Die", artist: "Billie Eilish", url: "https://sv.jenabmusic.com/music/2025/03/07/Billie%20Eilish%20-%20No%20Time%20To%20Die.Mp3" }
         ];
 
+        // ========== جملات ==========
         const motivQuotes = [
             { en: "The only way to do great work is to love what you do.", fa: "تنها راه انجام کار بزرگ، عشق ورزیدن به کاری است که انجام می‌دهی.", author: "Steve Jobs" },
             { en: "I have not failed. I've just found 10,000 ways that won't work.", fa: "من شکست نخورده‌ام. فقط ۱۰,۰۰۰ راه پیدا کرده‌ام که کار نمی‌کند.", author: "Thomas Edison" },
@@ -389,7 +381,6 @@
             { en: "Get busy living or get busy dying.", fa: "یا مشغول زندگی کردن باش، یا مشغول مردن.", author: "Stephen King" },
             { en: "You miss 100% of the shots you don't take.", fa: "۱۰۰٪ شوت‌هایی که نمی‌زنی را از دست می‌دهی.", author: "Wayne Gretzky" }
         ];
-
         const bookQuotes = [
             { en: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.", fa: "این حقیقتی است که همگان پذیرفته‌اند: یک مرد مجرد با ثروتی کلان، حتماً به یک همسر نیاز دارد.", author: "Jane Austen, Pride and Prejudice" },
             { en: "All happy families are alike; each unhappy family is unhappy in its own way.", fa: "همه خانواده‌های خوشبخت شبیه هم هستند؛ هر خانواده ناخوشبختی به شیوه خودش ناخوشبخت است.", author: "Leo Tolstoy, Anna Karenina" },
@@ -403,35 +394,23 @@
             { en: "It was love at first sight, at last sight, at ever and ever sight.", fa: "این عشق در نگاه اول بود، در آخرین نگاه، در همیشه و همیشه نگاه.", author: "Vladimir Nabokov, Lolita" }
         ];
 
-        // ذرات
-        const particlesContainer = document.getElementById('particlesContainer');
-        for (let i = 0; i < 30; i++) {
-            const dot = document.createElement('div');
-            dot.className = 'chem-dot';
-            const size = Math.random() * 6 + 2;
-            dot.style.width = size + 'px'; dot.style.height = size + 'px';
-            dot.style.top = Math.random() * 100 + '%'; dot.style.left = Math.random() * 100 + '%';
-            dot.style.animationDelay = Math.random() * 8 + 's';
-            particlesContainer.appendChild(dot);
-        }
-
-        // تقویم
-        function updateDate() {
+        // ========== پیشرفت روزانه ==========
+        function updateDayProgress() {
             const now = new Date();
-            try {
-                const p = now.toLocaleDateString('fa-IR', { year: 'numeric', month: 'long', day: 'numeric', calendar: 'persian' }).split(' ');
-                document.getElementById('persianYear').textContent = p[0] || '';
-                document.getElementById('persianMonth').textContent = p[1] || '';
-                document.getElementById('persianDay').textContent = p[2] || '';
-            } catch(e) {
-                document.getElementById('persianDay').textContent = now.getDate();
-                document.getElementById('persianMonth').textContent = now.toLocaleDateString('fa-IR', { month: 'long' });
-                document.getElementById('persianYear').textContent = now.getFullYear();
-            }
+            const startOfDay = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            const elapsed = now - startOfDay;
+            const totalDay = 24 * 60 * 60 * 1000;
+            const percent = Math.min(100, Math.floor((elapsed / totalDay) * 100));
+            document.getElementById('dayProgressText').textContent = percent + '%';
+            const circle = document.getElementById('dayProgressCircle');
+            const circumference = 2 * Math.PI * 54; // 339.292
+            circle.style.strokeDasharray = circumference;
+            circle.style.strokeDashoffset = circumference * (1 - percent / 100);
         }
-        updateDate(); setInterval(updateDate, 60000);
+        updateDayProgress();
+        setInterval(updateDayProgress, 60000);
 
-        // ربات جملات
+        // ========== ربات نقل‌قول ==========
         function updateQuotes() {
             const m = motivQuotes[Math.floor(Math.random() * motivQuotes.length)];
             document.getElementById('motivEn').textContent = `"${m.en}"`;
@@ -442,9 +421,10 @@
             document.getElementById('bookFa').textContent = b.fa;
             document.getElementById('bookAuthor').textContent = `— ${b.author}`;
         }
-        updateQuotes(); setInterval(updateQuotes, 5400000); // هر ۱.۵ ساعت
+        updateQuotes();
+        setInterval(updateQuotes, 5400000);
 
-        // پلیر
+        // ========== پلیر ==========
         const audio = document.getElementById('audioPlayer');
         let currentTrack = 0, isPlaying = false;
         const playPauseModal = document.getElementById('playPauseModal');
@@ -487,7 +467,7 @@
         document.getElementById('playerFloatBtn').addEventListener('click', () => playerModal.classList.add('active'));
         document.getElementById('closePlayerModal').addEventListener('click', () => playerModal.classList.remove('active'));
 
-        // پومودورو
+        // ========== پومودورو ==========
         const pomoModal = document.getElementById('pomodorroModal');
         const timerDisplay = document.getElementById('timerDisplay');
         const ringFill = document.getElementById('ringFill');
