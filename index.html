@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>دنیای سریال | Donyay Serial</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Playfair+Display:ital,wght@1,400;1,700&family=Nosifer&family=Quicksand:wght@400;600;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nosifer&family=Quicksand:wght@400;600;700&family=Vazirmatn:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --pink: #ff99c8;
@@ -55,13 +55,9 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.5);
             transition: all 0.3s ease;
         }
-        .card:hover {
-            border-color: var(--pink);
-            box-shadow: 0 0 25px rgba(255,153,200,0.3);
-            transform: translateY(-3px);
-        }
+        .card:hover { border-color: var(--pink); box-shadow: 0 0 25px rgba(255,153,200,0.3); transform: translateY(-3px); }
 
-        /* لوگوی ترکیبی (دو دکمه کنار هم) */
+        /* لوگوهای یکرنگ و چسبیده */
         .logo-links {
             display: flex; gap: 0; justify-content: center;
         }
@@ -69,7 +65,7 @@
             flex: 1; max-width: 170px;
             background: rgba(255,255,255,0.07);
             backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.15);
+            border: none;
             padding: 14px 18px;
             text-align: center;
             cursor: pointer;
@@ -85,54 +81,37 @@
         }
         .logo-btn:first-child {
             border-radius: 20px 0 0 20px;
-            background: rgba(255,153,200,0.15);
-            border-color: rgba(255,153,200,0.5);
-            color: var(--pink);
+            background: rgba(255,153,200,0.2);
         }
         .logo-btn:last-child {
             border-radius: 0 20px 20px 0;
-            background: rgba(114,9,183,0.15);
-            border-color: rgba(114,9,183,0.5);
-            color: #fff;
+            background: rgba(255,153,200,0.2);
+            border-left: 1px solid rgba(255,255,255,0.2);
         }
         .logo-btn:hover {
-            transform: scale(1.02);
             background: rgba(255,255,255,0.15);
             box-shadow: 0 0 18px rgba(255,153,200,0.4);
+            transform: scale(1.02);
         }
 
-        /* تقویم (بدون تغییر) */
+        /* تقویم و جملات (بدون تغییر) */
         .date-widget {
             background: linear-gradient(135deg, rgba(114,9,183,0.3) 0%, rgba(20,10,40,0.9) 100%);
             border-radius: 24px; padding: 20px; text-align: center;
             box-shadow: 0 8px 20px rgba(0,0,0,0.5);
         }
-        .day-number {
-            font-size: 3.5rem; font-weight: 700; color: #fff;
-            text-shadow: 0 0 15px var(--pink); line-height: 1;
-        }
+        .day-number { font-size: 3.5rem; font-weight: 700; color: #fff; text-shadow: 0 0 15px var(--pink); line-height: 1; }
         .day-detail { font-size: 0.9rem; color: var(--pink); margin-top: 5px; font-weight: 600; }
-
-        /* جملات (بدون تغییر) */
         .quote-card { border-right: 4px solid var(--purple); padding-right: 15px; }
-        .quote-text {
-            font-family: 'Quicksand', sans-serif; font-size: 0.9rem; line-height: 1.8;
-            color: #fff; margin-bottom: 5px; font-weight: 500;
-        }
-        .quote-fa {
-            font-family: 'Vazirmatn', sans-serif; font-size: 0.8rem; line-height: 1.7;
-            color: var(--light-gray); margin-bottom: 5px;
-        }
-        .quote-separator {
-            height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-            margin: 8px 0;
-        }
+        .quote-text { font-family: 'Quicksand', sans-serif; font-size: 0.9rem; line-height: 1.8; color: #fff; margin-bottom: 5px; font-weight: 500; }
+        .quote-fa { font-family: 'Vazirmatn', sans-serif; font-size: 0.8rem; line-height: 1.7; color: var(--light-gray); margin-bottom: 5px; }
+        .quote-separator { height: 1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent); margin: 8px 0; }
         .quote-author { color: var(--pink); font-size: 0.8rem; text-align: left; }
 
-        /* دکمه‌های شناور */
+        /* دکمه‌های شناور (کوچک‌تر) */
         .floating-btn {
             position: fixed; z-index: 999;
-            width: 65px; height: 65px; border-radius: 50%;
+            width: 50px; height: 50px; border-radius: 50%;
             border: none; cursor: pointer;
             box-shadow: 0 10px 25px rgba(0,0,0,0.6);
             transition: 0.3s; display: flex; align-items: center; justify-content: center;
@@ -146,7 +125,7 @@
             animation: spinVinyl 3s linear infinite;
         }
         .player-float svg {
-            width: 65px; height: 65px;
+            width: 50px; height: 50px;
             filter: drop-shadow(0 0 12px rgba(255,153,200,0.6));
         }
         @keyframes spinVinyl { 100% { transform: rotate(360deg); } }
@@ -156,11 +135,12 @@
             bottom: 30px; left: 30px;
             background: radial-gradient(circle at 30% 30%, #ff6b6b, #c1121f);
             border: 2px solid #fff;
-            font-size: 2rem;
-            width: 65px; height: 65px;
+            font-size: 1.6rem;
+            animation: spin 4s linear infinite;
         }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* مدال پومودورو (تغییر یافته: یکدست و دکمه‌های شیشه‌ای) */
+        /* مدال پومودورو (بدون تغییر) */
         .modal {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
@@ -168,14 +148,10 @@
         }
         .modal.active { display: flex; }
         .modal-content {
-            background: rgba(20, 10, 40, 0.9);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255,255,255,0.15);
-            border-radius: 30px;
-            padding: 25px;
-            max-width: 400px; width: 90%;
-            max-height: 80vh; overflow-y: auto;
-            color: #fff;
+            background: rgba(20, 10, 40, 0.9); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.15); border-radius: 30px;
+            padding: 25px; max-width: 400px; width: 90%;
+            max-height: 80vh; overflow-y: auto; color: #fff;
             box-shadow: 0 0 40px rgba(0,0,0,0.5);
         }
         #pomodorroModal .modal-content {
@@ -186,63 +162,30 @@
         .timer-ring { position: relative; width: 200px; height: 200px; margin: 20px auto; }
         .timer-ring svg { transform: rotate(-90deg); }
         .ring-bg { stroke: rgba(255,255,255,0.08); stroke-width: 4; }
-        .ring-fill {
-            stroke: var(--pink); stroke-width: 4;
-            stroke-dasharray: 6 10; stroke-linecap: round;
-        }
-        .tomato-emoji {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            font-size: 4.5rem; animation: bounce 2s infinite;
-        }
-        @keyframes bounce {
-            0%,100% { transform: translate(-50%, -50%) translateY(0); }
-            50% { transform: translate(-50%, -50%) translateY(-15px); }
-        }
-        .timer-display {
-            font-family: 'Quicksand', sans-serif; font-size: 2rem; text-align: center; color: var(--pink);
-        }
+        .ring-fill { stroke: var(--pink); stroke-width: 4; stroke-dasharray: 6 10; stroke-linecap: round; }
+        .tomato-emoji { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4.5rem; animation: bounce 2s infinite; }
+        @keyframes bounce { 0%,100% { transform: translate(-50%, -50%) translateY(0); } 50% { transform: translate(-50%, -50%) translateY(-15px); } }
+        .timer-display { font-family: 'Quicksand', sans-serif; font-size: 2rem; text-align: center; color: var(--pink); }
         .btn-row { display: flex; gap: 15px; justify-content: center; margin-top: 20px; }
-        /* دکمه‌های شیشه‌ای مدرن */
-        .btn {
-            padding: 10px 25px; border-radius: 30px; border: none;
-            font-weight: bold; cursor: pointer; transition: 0.3s; font-family: inherit;
-        }
-        .btn-glass {
-            background: rgba(255,255,255,0.1);
-            backdrop-filter: blur(8px);
-            border: 1px solid rgba(255,255,255,0.25);
-            color: #fff;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-        }
-        .btn-glass:hover {
-            background: rgba(255,255,255,0.2);
-            box-shadow: 0 0 20px rgba(255,153,200,0.4);
-            transform: translateY(-2px);
-        }
-        .btn-close {
-            background: rgba(255,255,255,0.05);
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: #fff;
-            margin-top: 15px;
-            border-radius: 25px;
-        }
-        .btn-close:hover {
-            background: rgba(255,255,255,0.15);
+        .btn { padding: 10px 25px; border-radius: 30px; border: none; font-weight: bold; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .btn-glass { background: rgba(255,255,255,0.1); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); color: #fff; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+        .btn-glass:hover { background: rgba(255,255,255,0.2); box-shadow: 0 0 20px rgba(255,153,200,0.4); transform: translateY(-2px); }
+        .btn-close { background: rgba(255,255,255,0.05); backdrop-filter: blur(5px); border: 1px solid rgba(255,255,255,0.2); color: #fff; margin-top: 15px; border-radius: 25px; }
+        .btn-close:hover { background: rgba(255,255,255,0.15); }
+        @media (max-width: 768px) {
+            .dashboard { grid-template-columns: 1fr; }
+            .logo-btn { font-size: 1.4rem; }
         }
     </style>
 </head>
 <body>
     <div class="dashboard">
-        <!-- لوگوی ترکیبی (دو دکمه با فونت عجیب) -->
         <div class="card" style="background: transparent; border: none; box-shadow: none; backdrop-filter: none;">
             <div class="logo-links">
                 <a href="https://serialblog1.top/" target="_blank" class="logo-btn">DONYAY<br>SERIAL</a>
                 <a href="https://www.nilfgaard.top/" target="_blank" class="logo-btn">BIA 2<br>MOVE</a>
             </div>
         </div>
-
-        <!-- سایر بخش‌ها (بدون هیچ تغییری) -->
         <div class="card date-widget">
             <div class="day-number" id="todayDay">۱۵</div>
             <div class="day-detail" id="todayDetail">چهارشنبه، اردیبهشت ۱۴۰۴</div>
@@ -276,7 +219,6 @@
 
     <button class="floating-btn pomodorro-float" id="pomodorroFloatBtn" title="تایمر پومودورو">🍅</button>
 
-    <!-- مدال پومودورو (با ظاهر یکدست و دکمه‌های شیشه‌ای) -->
     <div class="modal" id="pomodorroModal">
         <div class="modal-content">
             <h2>🍅 پومودورو</h2>
